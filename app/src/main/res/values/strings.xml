@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Give Me My Money</string>
+    <string name="save">save</string>
+    <string name="aucun_mendiant_a_raquetter">Aucun mendiant a raquetter</string>
+    <string name="Date">Date</string>
+
 </resources>
