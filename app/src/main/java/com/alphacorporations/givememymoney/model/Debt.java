@@ -14,7 +14,7 @@ public class Debt {
     @PrimaryKey(autoGenerate = true)
     private long id;
     @Nullable
-    private int img;
+    private String img;
     private String name;
     @Nullable
     private String object;
@@ -22,7 +22,7 @@ public class Debt {
     private String date;
     private int amount;
 
-    public Debt(long id, int img, String name, String object, String date, int amount) {
+    public Debt(long id, String img, String name, String object, String date, int amount) {
         this.id = id;
         this.img = img;
         this.name = name;
@@ -35,11 +35,11 @@ public class Debt {
 
     public void setId(long id) { this.id = id;}
 
-    public int getImg() {
+    public String getImg() {
         return img;
     }
 
-    public void setImg(int img) { this.img = img;}
+    public void setImg(String img) { this.img = img;}
 
     public String getName() { return name; }
 

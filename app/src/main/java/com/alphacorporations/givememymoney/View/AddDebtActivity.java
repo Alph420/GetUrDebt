@@ -5,11 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
@@ -18,7 +14,6 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alphacorporations.givememymoney.R;
 import com.alphacorporations.givememymoney.ViewModel.Injection;
@@ -27,14 +22,9 @@ import com.alphacorporations.givememymoney.model.Debt;
 import com.alphacorporations.givememymoney.model.MainViewModel;
 import com.alphacorporations.givememymoney.model.database.DebtDatabase;
 import com.alphacorporations.givememymoney.model.database.dao.DebtDao;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 public class AddDebtActivity extends AppCompatActivity {
@@ -42,7 +32,7 @@ public class AddDebtActivity extends AppCompatActivity {
     DebtDatabase mDatabase;
     DebtDao debtDao;
     MainViewModel mMainViewModel;
-    Date date;
+    String date;
 
 
     private DebtAdapter adapter;
@@ -55,8 +45,11 @@ public class AddDebtActivity extends AppCompatActivity {
     TextView lastName;
     TextView object;
     TextView amount;
+    String avatar;
 
     Button mButtonSave;
+
+    OutputStream outputStream;
 
     Boolean canSave = false;
     Boolean setDate = false;
@@ -96,13 +89,13 @@ public class AddDebtActivity extends AppCompatActivity {
                 if (s.length() > 0) mButtonSave.setEnabled(true);
                 mButtonSave.setTextColor(Color.WHITE);
 
-                canSave =true;
+                canSave = true;
             }
 
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.length() > 0) mButtonSave.setEnabled(true);
-                canSave =true;
+                canSave = true;
 
             }
         });
@@ -112,19 +105,16 @@ public class AddDebtActivity extends AppCompatActivity {
     }
 
     public void saving() {
-        System.out.println("CLICK");
         long id = 0;
-        int avatar = avatarDebt.getResources().getIdentifier("avatar", "strings", this.getPackageName());
         String name = firstName.getText() + " " + lastName.getText();
-
         String objectDebt;
         if (object.getText().equals("")) objectDebt = null;
         else objectDebt = object.getText().toString();
 
-        int amountDebt = Integer.valueOf(amount.getText().toString());
+        int amountDebt = Integer.parseInt(amount.getText().toString());
 
         if (setDate) {
-            Debt debt = new Debt(id, avatar, name, objectDebt, date.toString(), amountDebt);
+            Debt debt = new Debt(id, avatar, name, objectDebt, date, amountDebt);
             this.mMainViewModel.createDebt(debt);
             finish();
 
@@ -149,22 +139,8 @@ public class AddDebtActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK) {
-            try {
-                final Uri imageUri = data.getData();
-                final InputStream imageStream = getContentResolver().openInputStream(imageUri);
-                final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-                final Drawable imgSelect = new BitmapDrawable(getResources(), selectedImage);
-
-                Glide.with(getApplicationContext())
-                        .load(imgSelect)
-                        .transform(new RoundedCorners(getResources().getDimensionPixelSize(R.dimen.corner_radius)))
-                        .into(avatarDebt);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-                Toast.makeText(getApplicationContext(), "Une erreur s'est produite", Toast.LENGTH_LONG).show();
-            }
-        } else {
-            Toast.makeText(getApplicationContext(), "Vous n'avez pas choisi d'image", Toast.LENGTH_LONG).show();
+            final Uri imageUri = data.getData();
+            avatarDebt.setImageURI(imageUri);
         }
     }
 
@@ -178,7 +154,7 @@ public class AddDebtActivity extends AppCompatActivity {
             int year = picker.getYear();
             int mon = picker.getMonth();
             int day = picker.getDayOfMonth();
-            date = new GregorianCalendar(year, mon, day).getTime();
+            date = day + "/" + mon + "/" + year;
             setDate = true;
         });
         builderDatePicker.setNegativeButton(

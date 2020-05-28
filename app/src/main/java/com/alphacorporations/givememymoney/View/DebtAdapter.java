@@ -6,17 +6,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.alphacorporations.givememymoney.R;
 import com.alphacorporations.givememymoney.model.Debt;
 import com.alphacorporations.givememymoney.model.database.DebtDatabase;
 import com.bumptech.glide.Glide;
-
 import java.util.List;
 
 /**
@@ -155,7 +152,11 @@ public class DebtAdapter extends RecyclerView.Adapter<DebtAdapter.DebtViewHolder
          * @param debt the task to bind in the item view
          */
         void bind(Debt debt) {
-            Glide.with(itemView).load(debt.getImg()).centerCrop().placeholder(R.drawable.ic_autorenew).into(debtImg);
+            if (debt.getImg() == null || debt.getImg().equals(""))
+                Glide.with(itemView).load(R.drawable.ic_person).centerCrop().into(debtImg);
+            else
+                Glide.with(itemView).load(debt.getImg()).into(debtImg);
+
             lblDebtName.setText(debt.getName());
             lblDebtObject.setText(debt.getObject());
             lblDebtDate.setText(debt.getDate());
