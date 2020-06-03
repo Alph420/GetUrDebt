@@ -23,7 +23,6 @@ import com.alphacorporations.givememymoney.model.MainViewModel;
 import com.alphacorporations.givememymoney.model.database.DebtDatabase;
 import com.alphacorporations.givememymoney.model.database.dao.DebtDao;
 
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,9 +48,6 @@ public class AddDebtActivity extends AppCompatActivity {
 
     Button mButtonSave;
 
-    OutputStream outputStream;
-
-    Boolean canSave = false;
     Boolean setDate = false;
 
     @Override
@@ -74,29 +70,46 @@ public class AddDebtActivity extends AppCompatActivity {
         lastName = findViewById(R.id.last_name_debt);
         object = findViewById(R.id.object_debt);
         amount = findViewById(R.id.amount_debt);
-        amount.setText("0");
 
         mButtonSave = findViewById(R.id.save_debt);
         mButtonSave.setEnabled(false);
         mButtonSave.setTextColor(Color.RED);
+
         firstName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                if (s.length() >= 1) {
+                    mButtonSave.setEnabled(true);
+                    mButtonSave.setTextColor(Color.WHITE);
+                }
+                if (s.length() == 0) {
+                    mButtonSave.setEnabled(false);
+                    mButtonSave.setTextColor(Color.RED);
+                }
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length() > 0) mButtonSave.setEnabled(true);
-                mButtonSave.setTextColor(Color.WHITE);
-
-                canSave = true;
+                if (s.length() >= 1) {
+                    mButtonSave.setEnabled(true);
+                    mButtonSave.setTextColor(Color.WHITE);
+                }
+                if (s.length() == 0) {
+                    mButtonSave.setEnabled(false);
+                    mButtonSave.setTextColor(Color.RED);
+                }
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.length() > 0) mButtonSave.setEnabled(true);
-                canSave = true;
-
+                if (s.length() >= 1) {
+                    mButtonSave.setEnabled(true);
+                    mButtonSave.setTextColor(Color.WHITE);
+                }
+                if (s.length() == 0) {
+                    mButtonSave.setEnabled(false);
+                    mButtonSave.setTextColor(Color.RED);
+                }
             }
         });
 
@@ -111,7 +124,11 @@ public class AddDebtActivity extends AppCompatActivity {
         if (object.getText().equals("")) objectDebt = null;
         else objectDebt = object.getText().toString();
 
-        int amountDebt = Integer.parseInt(amount.getText().toString());
+        String amountField = amount.getText().toString();
+        int amountDebt = amountField.equals("") ? 0:Integer.parseInt(amountField);
+
+
+
 
         if (setDate) {
             Debt debt = new Debt(id, avatar, name, objectDebt, date, amountDebt);
