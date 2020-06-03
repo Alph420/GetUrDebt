@@ -10,10 +10,16 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.alphacorporations.givememymoney.Constant;
 import com.alphacorporations.givememymoney.R;
+import com.alphacorporations.givememymoney.event.OpenDebtEvent;
 import com.alphacorporations.givememymoney.model.Debt;
 import com.alphacorporations.givememymoney.model.database.DebtDatabase;
 import com.bumptech.glide.Glide;
+
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.List;
 
 /**
@@ -68,6 +74,12 @@ public class DebtAdapter extends RecyclerView.Adapter<DebtAdapter.DebtViewHolder
     @Override
     public void onBindViewHolder(@NonNull DebtViewHolder debtViewHolder, int position) {
         debtViewHolder.bind(debts.get(position));
+
+        //got to debt profile
+        debtViewHolder.itemView.setOnClickListener(v -> {
+            Constant.idDebt = debts.get(position).getId();
+            EventBus.getDefault().post(new OpenDebtEvent(v));
+        });
     }
 
     @Override
@@ -92,7 +104,7 @@ public class DebtAdapter extends RecyclerView.Adapter<DebtAdapter.DebtViewHolder
      *
      * @author Gaëtan HERFRAY
      */
-    class DebtViewHolder extends RecyclerView.ViewHolder {
+    static class DebtViewHolder extends RecyclerView.ViewHolder {
 
         private final AppCompatImageView debtImg;
         private final TextView lblDebtName;
@@ -120,6 +132,7 @@ public class DebtAdapter extends RecyclerView.Adapter<DebtAdapter.DebtViewHolder
             lblDebtAmount = itemView.findViewById(R.id.item_list_amount);
             imgDelete = itemView.findViewById(R.id.item_list_delete_button);
 
+            //Delete Debt and confirmation
             imgDelete.setOnClickListener(view -> {
                 AlertDialog.Builder builder1 = new AlertDialog.Builder(view.getContext());
                 builder1.setMessage("Veux tu vraiment supprimer cet dette ?");
@@ -144,6 +157,7 @@ public class DebtAdapter extends RecyclerView.Adapter<DebtAdapter.DebtViewHolder
                 AlertDialog alert11 = builder1.create();
                 alert11.show();
             });
+
         }
 
         /**

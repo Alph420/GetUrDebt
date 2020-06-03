@@ -3,7 +3,6 @@ package com.alphacorporations.givememymoney.View;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -14,7 +13,6 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.alphacorporations.givememymoney.R;
 import com.alphacorporations.givememymoney.ViewModel.Injection;
 import com.alphacorporations.givememymoney.ViewModel.ViewModelFactory;
@@ -23,19 +21,12 @@ import com.alphacorporations.givememymoney.model.MainViewModel;
 import com.alphacorporations.givememymoney.model.database.DebtDatabase;
 import com.alphacorporations.givememymoney.model.database.dao.DebtDao;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class AddDebtActivity extends AppCompatActivity {
 
     DebtDatabase mDatabase;
     DebtDao debtDao;
     MainViewModel mMainViewModel;
     String date;
-
-
-    private DebtAdapter adapter;
-    private List<Debt> mDebtList = new ArrayList<>();
 
     final static int SELECT_PICTURE = 1;
 
