@@ -18,7 +18,7 @@ import java.util.List;
 public interface DebtDao {
 
     @Query("SELECT * FROM Debt WHERE id = :idDebt")
-    Debt getDebt(long idDebt);
+    LiveData<Debt> getDebt(long idDebt);
 
     @Query("SELECT * FROM Debt")
     LiveData<List<Debt>> getDebts();

@@ -18,8 +18,8 @@ public class DebtRepository {
     public DebtRepository(DebtDao debtDao) { mDebtDao = debtDao; }
 
     //--- GET ---
-    public Debt getDebt(long projectId) {
-        return this.mDebtDao.getDebt(projectId);
+    public LiveData getDebt(long debtId) {
+        return this.mDebtDao.getDebt(debtId);
     }
 
     public LiveData<List<Debt>> getDebts() {
@@ -27,17 +27,17 @@ public class DebtRepository {
     }
 
     //--- INSERT ---
-    public void insertDebt(Debt project) {
-        this.mDebtDao.insertDebt(project);
+    public void insertDebt(Debt debt) {
+        this.mDebtDao.insertDebt(debt);
     }
 
     //--- UPDATE ---
-    public void updateDebt(Debt project) {
-        this.mDebtDao.updateDebt(project);
+    public void updateDebt(Debt debt) {
+        this.mDebtDao.updateDebt(debt);
     }
 
     //--- DELETE ---
-    public void deleteDebt(long idProject) {
-        this.mDebtDao.deleteDebt(idProject);
+    public void deleteDebt(long idDebt) {
+        this.mDebtDao.deleteDebt(idDebt);
     }
 }

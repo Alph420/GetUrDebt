@@ -1,6 +1,7 @@
 package com.alphacorporations.givememymoney;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
@@ -25,13 +26,15 @@ public class ProfileDebtActivity extends AppCompatActivity {
 
     private DebtAdapter adapter;
     private List<Debt> mDebtList = new ArrayList<>();
-    private Debt debt;
+    private LiveData debt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_debt);
 
+        mDatabase = DebtDatabase.getInstance(this);
+        debtDao = mDatabase.debtDao();
         this.configureViewModel();
 
 
@@ -40,9 +43,11 @@ public class ProfileDebtActivity extends AppCompatActivity {
 
         if (intent != null) {
             if (intent.hasExtra("DebtId")) {
-                debt = mMainViewModel.getTask(intent.getLongExtra("DebtId", 0));
+                debt = this.mMainViewModel.getDebtsById(intent.getLongExtra("DebtId", 0));
             }
         }
+
+        System.out.println("Activité profile Debt");
     }
 
 

@@ -23,8 +23,8 @@ public class MainViewModel extends ViewModel {
     }
 
     // FOR TASK
-    public Debt getTask(long taskId) {
-        return debtDataSource.getDebt(taskId);
+    public LiveData getDebtsById(long debtId) {
+        return debtDataSource.getDebt(debtId);
     }
 
     public LiveData<List<Debt>> getDebts() {
@@ -35,8 +35,8 @@ public class MainViewModel extends ViewModel {
         executor.execute(() -> debtDataSource.insertDebt(task));
     }
 
-    public void deleteDebt(long taskId) {
-        executor.execute(() -> debtDataSource.deleteDebt(taskId));
+    public void deleteDebt(long debtId) {
+        executor.execute(() -> debtDataSource.deleteDebt(debtId));
     }
 
     public void updateDebt(Debt task) {
