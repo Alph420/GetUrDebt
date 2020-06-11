@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.alphacorporations.givememymoney.Constant;
-import com.alphacorporations.givememymoney.ProfileDebtActivity;
+import com.alphacorporations.givememymoney.View.ProfileDebtActivity;
 
 public class OpenDebtEvent {
     public OpenDebtEvent(View v) {

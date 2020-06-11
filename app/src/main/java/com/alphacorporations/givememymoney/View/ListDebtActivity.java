@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.alphacorporations.givememymoney.Constant;
 import com.alphacorporations.givememymoney.R;
 import com.alphacorporations.givememymoney.ViewModel.Injection;
 import com.alphacorporations.givememymoney.ViewModel.ViewModelFactory;
@@ -93,6 +94,7 @@ public class ListDebtActivity extends AppCompatActivity implements DebtAdapter.D
         final Observer<List<Debt>> debtObserver = debtList -> {
             if (debtList != null) {
                 mDebtList = debtList;
+                Constant.mDebtList = mDebtList;
                 updateTasks();
             }
         };

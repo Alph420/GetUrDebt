@@ -79,6 +79,7 @@ public class DebtAdapter extends RecyclerView.Adapter<DebtAdapter.DebtViewHolder
         debtViewHolder.itemView.setOnClickListener(v -> {
             Constant.idDebt = debts.get(position).getId();
             EventBus.getDefault().post(new OpenDebtEvent(v));
+            System.out.println(Constant.idDebt);
         });
     }
 

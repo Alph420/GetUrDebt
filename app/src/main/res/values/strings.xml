@@ -3,5 +3,6 @@
     <string name="save">save</string>
     <string name="aucun_mendiant_a_raquetter">Aucun mendiant a raquetter</string>
     <string name="Date">Date</string>
+    <string name="identite"><![CDATA[prenom & nom]]></string>
 
 </resources>

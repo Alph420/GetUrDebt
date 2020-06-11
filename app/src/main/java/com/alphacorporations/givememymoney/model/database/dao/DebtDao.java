@@ -24,10 +24,10 @@ public interface DebtDao {
     LiveData<List<Debt>> getDebts();
 
     @Insert
-    long insertDebt(Debt project);
+    long insertDebt(Debt debt);
 
     @Update
-    int updateDebt(Debt project);
+    int updateDebt(Debt debt);
 
     @Query("DELETE FROM Debt WHERE id = :idDebt")
     int deleteDebt(long idDebt);
