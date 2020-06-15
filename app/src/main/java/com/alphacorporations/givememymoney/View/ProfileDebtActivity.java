@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Button;
@@ -19,10 +20,9 @@ import com.alphacorporations.givememymoney.model.database.DebtDatabase;
 import com.alphacorporations.givememymoney.model.database.dao.DebtDao;
 import com.alphacorporations.givememymoney.model.repositories.ProfileDebtViewModel;
 
-import java.util.List;
-
 public class ProfileDebtActivity extends AppCompatActivity {
 
+    final static int SELECT_PICTURE = 1;
 
     //UI COMPONENTS
     ImageView mImageView;
@@ -50,6 +50,7 @@ public class ProfileDebtActivity extends AppCompatActivity {
         populateList();
         initUI();
 
+        mImageView.setOnClickListener(v -> selectAvatar());
         mSaveBtn.setOnClickListener(v -> save());
 
     }
@@ -63,7 +64,7 @@ public class ProfileDebtActivity extends AppCompatActivity {
     }
 
     private void initDebtProfile() {
-        if(debt.getImg()==null) mImageView.setImageResource(R.drawable.ic_person);
+        if(debt.getImg()==null) mImageView.setImageResource(R.drawable.ic_person_green);
         else mImageView.setImageURI(Uri.parse(debt.getImg()));
         mNameDebt.setText(debt.getName());
         mDebtObject.setText(debt.getObject());
@@ -84,6 +85,27 @@ public class ProfileDebtActivity extends AppCompatActivity {
             }
         };
         this.mProfileDebtViewModel.getDebtsById(Constant.idDebt).observe(this, debtObserver);
+    }
+
+    public void selectAvatar() {
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, ""), SELECT_PICTURE);
+
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            //TODO use firebase
+            final Uri imageUri = data.getData();
+            mImageView.setImageURI(imageUri);
+            debt.setImg(imageUri.toString());
+
+        }
     }
 
     private void save() {

@@ -109,7 +109,6 @@ public class DebtAdapter extends RecyclerView.Adapter<DebtAdapter.DebtViewHolder
 
         private final AppCompatImageView debtImg;
         private final TextView lblDebtName;
-        private final TextView lblDebtObject;
         private final TextView lblDebtDate;
         private final TextView lblDebtAmount;
         private final ImageButton imgDelete;
@@ -128,7 +127,6 @@ public class DebtAdapter extends RecyclerView.Adapter<DebtAdapter.DebtViewHolder
 
             debtImg = itemView.findViewById(R.id.item_list_avatar);
             lblDebtName = itemView.findViewById(R.id.item_list_name);
-            lblDebtObject = itemView.findViewById(R.id.item_list_object);
             lblDebtDate = itemView.findViewById(R.id.item_list_date);
             lblDebtAmount = itemView.findViewById(R.id.item_list_amount);
             imgDelete = itemView.findViewById(R.id.item_list_delete_button);
@@ -168,12 +166,11 @@ public class DebtAdapter extends RecyclerView.Adapter<DebtAdapter.DebtViewHolder
          */
         void bind(Debt debt) {
             if (debt.getImg() == null || debt.getImg().equals(""))
-                Glide.with(itemView).load(R.drawable.ic_person).centerCrop().into(debtImg);
+                Glide.with(itemView).load(R.drawable.ic_person_green).centerCrop().into(debtImg);
             else
                 Glide.with(itemView).load(debt.getImg()).into(debtImg);
 
             lblDebtName.setText(debt.getName());
-            lblDebtObject.setText(debt.getObject());
             lblDebtDate.setText(debt.getDate());
             lblDebtAmount.setText(debt.getAmount() + "€");
             imgDelete.setTag(debt);
