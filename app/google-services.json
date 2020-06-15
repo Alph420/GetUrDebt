@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "459286078512",
+    "firebase_url": "https://givememymoney-6ad07.firebaseio.com",
+    "project_id": "givememymoney-6ad07",
+    "storage_bucket": "givememymoney-6ad07.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:459286078512:android:1e06800f72064d708039f5",
+        "android_client_info": {
+          "package_name": "com.alphacorporations.givememymoney"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "459286078512-grp5jobkev129gvvkabs624peeo1qhk3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlJKpc_oEZzv1wdb5wjdL_vMVMYD3n8bs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "459286078512-grp5jobkev129gvvkabs624peeo1qhk3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

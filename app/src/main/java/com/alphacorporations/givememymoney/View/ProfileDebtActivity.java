@@ -63,8 +63,8 @@ public class ProfileDebtActivity extends AppCompatActivity {
     }
 
     private void initDebtProfile() {
-
-        mImageView.setImageURI(Uri.parse(debt.getImg()));
+        if(debt.getImg()==null) mImageView.setImageResource(R.drawable.ic_person);
+        else mImageView.setImageURI(Uri.parse(debt.getImg()));
         mNameDebt.setText(debt.getName());
         mDebtObject.setText(debt.getObject());
         mDebtAmount.setText(String.valueOf(debt.getAmount()));
