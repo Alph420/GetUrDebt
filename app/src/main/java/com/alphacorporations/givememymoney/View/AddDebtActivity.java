@@ -17,7 +17,7 @@ import com.alphacorporations.givememymoney.R;
 import com.alphacorporations.givememymoney.ViewModel.Injection;
 import com.alphacorporations.givememymoney.ViewModel.ViewModelFactory;
 import com.alphacorporations.givememymoney.model.Debt;
-import com.alphacorporations.givememymoney.model.MainViewModel;
+import com.alphacorporations.givememymoney.model.ListDebtViewModel;
 import com.alphacorporations.givememymoney.model.database.DebtDatabase;
 import com.alphacorporations.givememymoney.model.database.dao.DebtDao;
 
@@ -25,7 +25,7 @@ public class AddDebtActivity extends AppCompatActivity {
 
     DebtDatabase mDatabase;
     DebtDao debtDao;
-    MainViewModel mMainViewModel;
+    ListDebtViewModel mListDebtViewModel;
     String date;
 
     final static int SELECT_PICTURE = 1;
@@ -110,6 +110,7 @@ public class AddDebtActivity extends AppCompatActivity {
 
     public void saving() {
         long id = 0;
+
         String name = firstName.getText() + " " + lastName.getText();
         String objectDebt;
         if (object.getText().equals("")) objectDebt = null;
@@ -123,12 +124,12 @@ public class AddDebtActivity extends AppCompatActivity {
 
         if (setDate) {
             Debt debt = new Debt(id, avatar, name, objectDebt, date, amountDebt);
-            this.mMainViewModel.createDebt(debt);
+            this.mListDebtViewModel.createDebt(debt);
             finish();
 
         } else {
             Debt debt = new Debt(id, avatar, name, objectDebt, null, amountDebt);
-            this.mMainViewModel.createDebt(debt);
+            this.mListDebtViewModel.createDebt(debt);
             finish();
         }
 
@@ -147,8 +148,11 @@ public class AddDebtActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK) {
+            //TODO use firebase
             final Uri imageUri = data.getData();
+            avatar = imageUri.toString();
             avatarDebt.setImageURI(imageUri);
+
         }
     }
 
@@ -173,7 +177,7 @@ public class AddDebtActivity extends AppCompatActivity {
 
     private void configureViewModel() {
         ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(this);
-        this.mMainViewModel = ViewModelProviders.of(this, mViewModelFactory).get(MainViewModel.class);
+        this.mListDebtViewModel = ViewModelProviders.of(this, mViewModelFactory).get(ListDebtViewModel.class);
     }
 
 }

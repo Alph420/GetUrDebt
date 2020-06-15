@@ -5,10 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -19,11 +18,10 @@ import com.alphacorporations.givememymoney.R;
 import com.alphacorporations.givememymoney.ViewModel.Injection;
 import com.alphacorporations.givememymoney.ViewModel.ViewModelFactory;
 import com.alphacorporations.givememymoney.model.Debt;
-import com.alphacorporations.givememymoney.model.MainViewModel;
+import com.alphacorporations.givememymoney.model.ListDebtViewModel;
 import com.alphacorporations.givememymoney.model.database.DebtDatabase;
 import com.alphacorporations.givememymoney.model.database.dao.DebtDao;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,11 +37,10 @@ public class ListDebtActivity extends AppCompatActivity implements DebtAdapter.D
 
     DebtDatabase mDatabase;
     DebtDao debtDao;
-    MainViewModel mMainViewModel;
+    ListDebtViewModel listDebtViewModel;
 
     private DebtAdapter adapter;
     private List<Debt> mDebtList = new ArrayList<>();
-
 
 
     @SuppressWarnings("NullableProblems")
@@ -61,8 +58,8 @@ public class ListDebtActivity extends AppCompatActivity implements DebtAdapter.D
         mDatabase = DebtDatabase.getInstance(this);
         debtDao = mDatabase.debtDao();
 
-        this.configureViewModel();
-        this.initList();
+        configureViewModel();
+        initList();
 
         setContentView(R.layout.activity_main);
 
@@ -94,22 +91,21 @@ public class ListDebtActivity extends AppCompatActivity implements DebtAdapter.D
         final Observer<List<Debt>> debtObserver = debtList -> {
             if (debtList != null) {
                 mDebtList = debtList;
-                Constant.mDebtList = mDebtList;
                 updateTasks();
             }
         };
-        this.mMainViewModel.getDebts().observe(this, debtObserver);
+        this.listDebtViewModel.getDebts().observe(this, debtObserver);
     }
 
     private void configureViewModel() {
         ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(this);
-        this.mMainViewModel = ViewModelProviders.of(this, mViewModelFactory).get(MainViewModel.class);
+        this.listDebtViewModel = ViewModelProviders.of(this, mViewModelFactory).get(ListDebtViewModel.class);
     }
 
     @Override
     public void onDeleteDebt(Debt debt) {
         mDebtList.remove(debt);
-        this.mMainViewModel.deleteDebt(debt.getId());
+        this.listDebtViewModel.deleteDebt(debt.getId());
         updateTasks();
     }
 

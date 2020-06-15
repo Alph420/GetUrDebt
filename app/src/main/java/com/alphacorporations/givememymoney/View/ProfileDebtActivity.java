@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,11 +15,10 @@ import com.alphacorporations.givememymoney.R;
 import com.alphacorporations.givememymoney.ViewModel.Injection;
 import com.alphacorporations.givememymoney.ViewModel.ViewModelFactory;
 import com.alphacorporations.givememymoney.model.Debt;
-import com.alphacorporations.givememymoney.model.MainViewModel;
 import com.alphacorporations.givememymoney.model.database.DebtDatabase;
 import com.alphacorporations.givememymoney.model.database.dao.DebtDao;
+import com.alphacorporations.givememymoney.model.repositories.ProfileDebtViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ProfileDebtActivity extends AppCompatActivity {
@@ -35,9 +34,8 @@ public class ProfileDebtActivity extends AppCompatActivity {
 
     DebtDatabase mDatabase;
     DebtDao debtDao;
-    MainViewModel mMainViewModel;
+    ProfileDebtViewModel mProfileDebtViewModel;
 
-    private List<Debt> mDebtList = Constant.mDebtList;
     private Debt debt;
 
     @Override
@@ -48,11 +46,9 @@ public class ProfileDebtActivity extends AppCompatActivity {
         mDatabase = DebtDatabase.getInstance(this);
         debtDao = mDatabase.debtDao();
 
-        this.configureViewModel();
-        getDebtFromList();
+        configureViewModel();
+        populateList();
         initUI();
-        initDebtProfile();
-
 
         mSaveBtn.setOnClickListener(v -> save());
 
@@ -67,6 +63,8 @@ public class ProfileDebtActivity extends AppCompatActivity {
     }
 
     private void initDebtProfile() {
+
+        mImageView.setImageURI(Uri.parse(debt.getImg()));
         mNameDebt.setText(debt.getName());
         mDebtObject.setText(debt.getObject());
         mDebtAmount.setText(String.valueOf(debt.getAmount()));
@@ -75,13 +73,17 @@ public class ProfileDebtActivity extends AppCompatActivity {
 
     private void configureViewModel() {
         ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(this);
-        this.mMainViewModel = ViewModelProviders.of(this, mViewModelFactory).get(MainViewModel.class);
+        this.mProfileDebtViewModel = ViewModelProviders.of(this, mViewModelFactory).get(ProfileDebtViewModel.class);
     }
 
-    private void getDebtFromList() {
-        for (Debt mdebt : mDebtList) {
-            if (mdebt.getId() == Constant.idDebt) debt = mdebt;
-        }
+    private void populateList() {
+        final Observer<Debt> debtObserver = debtList -> {
+            if (debtList != null) {
+                debt = debtList;
+                initDebtProfile();
+            }
+        };
+        this.mProfileDebtViewModel.getDebtsById(Constant.idDebt).observe(this, debtObserver);
     }
 
     private void save() {
@@ -91,7 +93,7 @@ public class ProfileDebtActivity extends AppCompatActivity {
         int amount = Integer.parseInt(amountstring);
         debt.setAmount(amount);
 
-        this.mMainViewModel.updateDebt(debt);
+        this.mProfileDebtViewModel.updateDebt(debt);
         finish();
     }
 

@@ -18,7 +18,7 @@ public class DebtRepository {
     public DebtRepository(DebtDao debtDao) { mDebtDao = debtDao; }
 
     //--- GET ---
-    public LiveData getDebt(long debtId) {
+    public LiveData<Debt> getDebt(long debtId) {
         return this.mDebtDao.getDebt(debtId);
     }
 

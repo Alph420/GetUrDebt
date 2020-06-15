@@ -1,35 +1,31 @@
-package com.alphacorporations.givememymoney.model;
+package com.alphacorporations.givememymoney.model.repositories;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
-import com.alphacorporations.givememymoney.model.repositories.DebtRepository;
-import java.util.List;
+import com.alphacorporations.givememymoney.model.Debt;
 import java.util.concurrent.Executor;
 
 /**
- * Created by Alph4 le 18/05/2020.
- * Projet: Todoc
+ * Created by Alph4 le 12/06/2020.
+ * Projet: Give Me My Money
  **/
-public class MainViewModel extends ViewModel {
+public class ProfileDebtViewModel extends ViewModel {
 
     // REPOSITORIES
     private final DebtRepository debtDataSource;
     private final Executor executor;
 
 
-    public MainViewModel(DebtRepository taskDataSource, Executor executor) {
+    public ProfileDebtViewModel(DebtRepository taskDataSource, Executor executor) {
         this.debtDataSource = taskDataSource;
         this.executor = executor;
     }
 
     // FOR TASK
-    public LiveData getDebtsById(long debtId) {
+    public LiveData<Debt> getDebtsById(long debtId) {
         return debtDataSource.getDebt(debtId);
     }
 
-    public LiveData<List<Debt>> getDebts() {
-        return debtDataSource.getDebts();
-    }
 
     public void createDebt(final Debt task) {
         executor.execute(() -> debtDataSource.insertDebt(task));
@@ -42,6 +38,5 @@ public class MainViewModel extends ViewModel {
     public void updateDebt(Debt task) {
         executor.execute(() -> debtDataSource.updateDebt(task));
     }
-
 
 }
