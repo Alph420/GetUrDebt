@@ -1,5 +1,6 @@
 package com.alphacorporations.givememymoney.View
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.alphacorporations.givememymoney.R
@@ -13,19 +14,15 @@ class SplashActivity : AppCompatActivity() {
 
 
         val user = FirebaseAuth.getInstance().currentUser
+        val intentSignUp = Intent(this, LoginActivity::class.java)
+        val intentList = Intent(this, ListDebtActivity::class.java)
+
+
         if (user != null) {
-            //TODO move to listDebt
+            startActivity(intentList)
         } else {
-            //TODO remplir les fields et executer l'authentification
-            FirebaseAuth.getInstance().signInWithEmailAndPassword("rene.jennequin@sfr.fr","admin123")
-                    .addOnCompleteListener(this) { task ->
-                        if (task.isSuccessful) {
-                           //TODO move to listDebt
-                        }
-                    }
+            startActivity(intentSignUp)
         }
-
-
 
 
     }

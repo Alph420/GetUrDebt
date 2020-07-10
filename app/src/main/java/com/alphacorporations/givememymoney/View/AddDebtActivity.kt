@@ -19,6 +19,7 @@ import com.alphacorporations.givememymoney.model.ListDebtViewModel
 import com.alphacorporations.givememymoney.model.database.DebtDatabase
 import com.alphacorporations.givememymoney.model.database.DebtDatabase.Companion.getInstance
 import com.alphacorporations.givememymoney.model.database.dao.DebtDao
+import kotlinx.android.synthetic.main.activity_add_debt.*
 
 class AddDebtActivity : AppCompatActivity() {
     var mDatabase: DebtDatabase? = null
@@ -45,7 +46,7 @@ class AddDebtActivity : AppCompatActivity() {
         configureViewModel()
         initUI()
         avatarDebt!!.setOnClickListener { v: View? -> selectAvatar() }
-        switchDate!!.setOnCheckedChangeListener { buttonView: CompoundButton?, isChecked: Boolean ->
+        switchDate!!.setOnCheckedChangeListener { _: CompoundButton?, _: Boolean ->
             if (switchDate!!.isChecked) {
                 println("VISIBLE")
                 dateBtn!!.visibility = View.VISIBLE
