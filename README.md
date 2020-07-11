@@ -1,3 +1,3 @@
 # GetUrDebt
 
-Application permettant de lister ces créances
+Application allowing to list these receivables
