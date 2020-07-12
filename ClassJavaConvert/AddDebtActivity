@@ -76,7 +76,7 @@ public class AddDebtActivity extends AppCompatActivity {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 if (s.length() >= 1) {
                     mButtonSave.setEnabled(true);
-                    mButtonSave.setTextColor(Color.GREEN);
+                    mButtonSave.setTextColor(Color.WHITE);
                 }
                 if (s.length() == 0) {
                     mButtonSave.setEnabled(false);
@@ -88,7 +88,7 @@ public class AddDebtActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.length() >= 1) {
                     mButtonSave.setEnabled(true);
-                    mButtonSave.setTextColor(Color.GREEN);
+                    mButtonSave.setTextColor(Color.WHITE);
                 }
                 if (s.length() == 0) {
                     mButtonSave.setEnabled(false);
@@ -100,7 +100,7 @@ public class AddDebtActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 if (s.length() >= 1) {
                     mButtonSave.setEnabled(true);
-                    mButtonSave.setTextColor(Color.GREEN);
+                    mButtonSave.setTextColor(Color.WHITE);
                 }
                 if (s.length() == 0) {
                     mButtonSave.setEnabled(false);
