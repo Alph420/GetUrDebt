@@ -1,3 +1,5 @@
 # GetUrDebt
 
-Application permettant de lister ces créances
+Application allowing to list these receivables
+
+- Migrate code to kotlin in progress..
