@@ -14,7 +14,6 @@ import com.alphacorporations.givememymoney.R
 import com.alphacorporations.givememymoney.View.DebtAdapter.DebtViewHolder
 import com.alphacorporations.givememymoney.event.OpenDebtEvent
 import com.alphacorporations.givememymoney.model.Debt
-import com.alphacorporations.givememymoney.model.database.DebtDatabase
 import com.bumptech.glide.Glide
 import org.greenrobot.eventbus.EventBus
 
@@ -33,18 +32,18 @@ class DebtAdapter
         /**
          * The list of tasks the adapter deals with
          */
-        private var debts: List<Debt>,
+        private var debts: List<Debt?>,
         /**
          * The listener for when a task needs to be deleted
          */
-        private val deleteTaskListener: DeleteTaskListener, var mDatabase: DebtDatabase) : RecyclerView.Adapter<DebtViewHolder>() {
+        private val deleteTaskListener: DeleteTaskListener) : RecyclerView.Adapter<DebtViewHolder>() {
 
     /**
      * Updates the list of tasks the adapter deals with.
      *
      * @param debts the list of tasks the adapter deals with to set
      */
-    fun updateTasks(debts: List<Debt>) {
+    fun updateTasks(debts: List<Debt?>) {
         this.debts = debts
         notifyDataSetChanged()
     }
@@ -55,11 +54,11 @@ class DebtAdapter
     }
 
     override fun onBindViewHolder(debtViewHolder: DebtViewHolder, position: Int) {
-        debtViewHolder.bind(debts[position])
+        debts[position]?.let { debtViewHolder.bind(it) }
 
         //got to debt profile
         debtViewHolder.itemView.setOnClickListener { v: View? ->
-            Constant.idDebt = debts[position].id
+            Constant.idDebt = debts[position]!!.id
             EventBus.getDefault().post(OpenDebtEvent((v)!!))
             println(Constant.idDebt)
         }
