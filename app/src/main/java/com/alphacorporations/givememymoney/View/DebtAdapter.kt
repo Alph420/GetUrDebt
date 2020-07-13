@@ -1,116 +1,61 @@
 package com.alphacorporations.givememymoney.View
 
+import android.content.Context
 import android.content.DialogInterface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.BaseAdapter
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.widget.AppCompatImageView
-import androidx.recyclerview.widget.RecyclerView
-import com.alphacorporations.givememymoney.Constant
 import com.alphacorporations.givememymoney.R
-import com.alphacorporations.givememymoney.View.DebtAdapter.DebtViewHolder
-import com.alphacorporations.givememymoney.event.OpenDebtEvent
 import com.alphacorporations.givememymoney.model.Debt
-import com.bumptech.glide.Glide
-import org.greenrobot.eventbus.EventBus
 
-/**
- *
- * Adapter which handles the list of tasks to display in the dedicated RecyclerView.
- *
- * @author Gaëtan HERFRAY
- */
-class DebtAdapter
-/**
- * Instantiates a new TasksAdapter.
- *
- * @param Debts the list of tasks the adapter deals with to set
- */ internal constructor(
-        /**
-         * The list of tasks the adapter deals with
-         */
-        private var debts: List<Debt?>,
-        /**
-         * The listener for when a task needs to be deleted
-         */
-        private val deleteTaskListener: DeleteTaskListener) : RecyclerView.Adapter<DebtViewHolder>() {
 
-    /**
-     * Updates the list of tasks the adapter deals with.
-     *
-     * @param debts the list of tasks the adapter deals with to set
-     */
-    fun updateTasks(debts: List<Debt?>) {
-        this.debts = debts
-        notifyDataSetChanged()
-    }
+class DebtAdapter(context: Context, DebtItemList: MutableList<Debt>) : BaseAdapter(){
 
-    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): DebtViewHolder {
-        val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.item_money, viewGroup, false)
-        return DebtViewHolder(view, deleteTaskListener)
-    }
+    private val mInflater: LayoutInflater = LayoutInflater.from(context)
+    private var itemList = DebtItemList
 
-    override fun onBindViewHolder(debtViewHolder: DebtViewHolder, position: Int) {
-        debts[position]?.let { debtViewHolder.bind(it) }
-
-        //got to debt profile
-        debtViewHolder.itemView.setOnClickListener { v: View? ->
-            EventBus.getDefault().post(OpenDebtEvent((v)!!))
-            println(Constant.idDebt)
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+        //if (itemList.get(position).img == null || itemList.get(position).img == "") Glide.with().load(R.drawable.ic_person_green).centerCrop().into(debtImg) else Glide.with(itemView).load(debt.img).into(debtImg)
+        var lblDebtName: String? = itemList[position].name.toString()
+        var lblDebtDate: String? = itemList[position].date.toString()
+        var lblDebtAmount: String = itemList[position].amount.toString().plus("€")
+        val view: View
+        val vh: ListRowHolder
+        if (convertView == null) {
+            view = mInflater.inflate(R.layout.item_money, parent, false)
+            vh = ListRowHolder(view)
+            view.tag = vh
+        } else {
+            view = convertView
         }
+        return view
     }
 
-    override fun getItemCount(): Int {
-        return debts.size
+    override fun getItem(index: Int): Any {
+        return itemList.get(index)
     }
 
-    /**
-     * Listener for deleting tasks
-     */
-    interface DeleteTaskListener {
-        /**
-         * Called when a task needs to be deleted.
-         *
-         * @param debt the task that needs to be deleted
-         */
-        fun onDeleteDebt(debt: Debt?)
+    override fun getItemId(index: Int): Long {
+        return index.toLong()
     }
 
-    /**
-     *
-     * ViewHolder for task items in the tasks list
-     *
-     * @author Gaëtan HERFRAY
-     */
-    class DebtViewHolder(itemView: View, private val deleteTaskListener: DeleteTaskListener) : RecyclerView.ViewHolder(itemView) {
-        private val debtImg: AppCompatImageView = itemView.findViewById(R.id.item_list_avatar)
-        private val lblDebtName: TextView = itemView.findViewById(R.id.item_list_name)
-        private val lblDebtDate: TextView = itemView.findViewById(R.id.item_list_date)
-        private val lblDebtAmount: TextView = itemView.findViewById(R.id.item_list_amount)
-        private val imgDelete: ImageButton = itemView.findViewById(R.id.item_list_delete_button)
+    override fun getCount(): Int {
+        return itemList.size
+    }
 
-        /**
-         * Binds a task to the item view.
-         *
-         * @param debt the task to bind in the item view
-         */
-        fun bind(debt: Debt) {
-            if (debt.img == null || debt.img == "") Glide.with(itemView).load(R.drawable.ic_person_green).centerCrop().into(debtImg) else Glide.with(itemView).load(debt.img).into(debtImg)
-            lblDebtName.text = debt.name
-            lblDebtDate.text = debt.date
-            lblDebtAmount.text = debt.amount.toString() + "€"
-            imgDelete.tag = debt
-        }
+    private class ListRowHolder(row: View?) {
+        private val debtImg: ImageView = row!!.findViewById(R.id.item_list_avatar) as ImageView
+        private val lblDebtName: TextView = row!!.findViewById(R.id.item_list_name) as TextView
+        private val lblDebtDate: TextView = row!!.findViewById(R.id.item_list_date) as TextView
+        private val lblDebtAmount: TextView = row!!.findViewById(R.id.item_list_amount) as TextView
+        private val imgDelete: ImageButton = row!!.findViewById(R.id.item_list_delete_button) as ImageButton
 
-        /**
-         * Instantiates a new TaskViewHolder.
-         *
-         * @param itemView           the view of the task item
-         * @param deleteTaskListener the listener for when a task needs to be deleted to set
-         */
+        /**Instantiates a new TaskViewHolder.**/
         init {
 
             //Delete Debt and confirmation
@@ -123,7 +68,7 @@ class DebtAdapter
                 ) { dialog, _ ->
                     val tag = view.tag
                     if (tag is Debt) {
-                        deleteTaskListener.onDeleteDebt(tag)
+
                     }
                     dialog.cancel()
                 }

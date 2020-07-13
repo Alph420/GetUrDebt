@@ -55,7 +55,6 @@ class ProfileDebtActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
-            //TODO use firebase
             val imageUri = data!!.data
             avatar!!.setImageURI(imageUri)
             debt!!.img = imageUri.toString()
@@ -66,7 +65,7 @@ class ProfileDebtActivity : AppCompatActivity() {
         debt!!.name = name_debt!!.text.toString()
         debt!!.reason = object_debt!!.text.toString()
         val amountstring = amount_debt!!.text.toString()
-        val amount = amountstring.toInt()
+        val amount = amountstring.toLong()
         debt!!.amount = amount
        // mProfileDebtViewModel!!.updateDebt(debt)
         finish()

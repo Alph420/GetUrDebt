@@ -12,12 +12,13 @@ class Debt {
     }
 
 
+
     var id: String? = null
     var img: String? = null
     var name: String? = null
     var reason: String? = null
     var date: String? = null
-    var amount: Int? = null
+    var amount: Long? = null
 
 
 }

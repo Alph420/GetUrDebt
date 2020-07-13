@@ -12,13 +12,11 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.alphacorporations.givememymoney.Constant
 import com.alphacorporations.givememymoney.Constant.FIREBASE_ITEM
 import com.alphacorporations.givememymoney.R
 import com.alphacorporations.givememymoney.model.Debt
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.core.Constants
 import kotlinx.android.synthetic.main.activity_add_debt.*
 
 class AddDebtActivity : AppCompatActivity() {
@@ -33,8 +31,6 @@ class AddDebtActivity : AppCompatActivity() {
     var imageUri: Uri? = null
     var setDate = false
 
-    //DEBT LIST
-    var debtList: MutableList<Debt>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,7 +71,7 @@ class AddDebtActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable) {
                 if (s.isNotEmpty()) {
                     save_debt!!.isEnabled = true
-                    save_debt!!.setTextColor(Color.GREEN)
+                    save_debt!!.setTextColor(Color.WHITE)
                 }
                 if (s.isEmpty()) {
                     save_debt!!.isEnabled = false
@@ -88,7 +84,7 @@ class AddDebtActivity : AppCompatActivity() {
     }
 
 
-    fun selectAvatar() {
+    private fun selectAvatar() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
         intent.action = Intent.ACTION_GET_CONTENT
@@ -104,7 +100,7 @@ class AddDebtActivity : AppCompatActivity() {
         }
     }
 
-    fun date() {
+    private fun date() {
         val builderDatePicker = AlertDialog.Builder(this)
         picker = DatePicker(this)
         picker!!.calendarViewShown = false
@@ -122,36 +118,30 @@ class AddDebtActivity : AppCompatActivity() {
         builderDatePicker.show()
     }
 
-    fun saving() {
+    private fun saving() {
+        val debtItem = Debt.create()
+
         if (setDate) {
-            val debtItem = Debt.create()
             debtItem.img = avatarUri
             debtItem.name = first_name_debt!!.text.toString() + " " + last_name_debt!!.text
             debtItem.reason = if (object_debt.toString() == "") null else object_debt!!.text.toString()
-            debtItem.date = amount_debt!!.text.toString()
-            debtItem.amount = if (amount_debt!!.text.toString() == "") 0 else amount_debt!!.text.toString().toInt()
-            debtList!!.add(debtItem)
+            debtItem.date = date
+            debtItem.amount = if (amount_debt!!.text.toString() == "") 0 else amount_debt!!.text.toString().toLong()
+
             val newItem = database.child(FIREBASE_ITEM).push()
-            debtItem.id = newItem.key
-            newItem.setValue(debtItem)
+            newItem.setValue(newItem.key)
             finish()
         } else {
-            val debtItem = Debt.create()
+
             debtItem.img = avatarUri
             debtItem.name = first_name_debt!!.text.toString() + " " + last_name_debt!!.text
             debtItem.reason = if (object_debt.toString() == "") null else object_debt!!.text.toString()
-            debtItem.date = amount_debt!!.text.toString()
-            debtItem.amount = if (amount_debt!!.text.toString() == "") 0 else amount_debt!!.text.toString().toInt()
-            debtList!!.add(debtItem)
+            debtItem.date = date
+            debtItem.amount = if (amount_debt!!.text.toString() == "") 0 else amount_debt!!.text.toString().toLong()
             val newItem = database.child(FIREBASE_ITEM).push()
-            debtItem.id = newItem.key
-            newItem.setValue(debtItem)
+            newItem.setValue(newItem.key)
             finish()
         }
-    }
-
-    fun pushToFirebase() {
-
     }
 
 
