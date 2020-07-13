@@ -58,7 +58,7 @@ class DebtAdapter(context: Context, DebtItemList: MutableList<Debt>) : BaseAdapt
         /**Instantiates a new TaskViewHolder.**/
         init {
 
-            //Delete Debt and confirmation
+            /**Confirmation delete debt**/
             imgDelete.setOnClickListener { view: View ->
                 val builder1 = AlertDialog.Builder(view.context)
                 builder1.setMessage("Veux tu vraiment supprimer cet dette ?")

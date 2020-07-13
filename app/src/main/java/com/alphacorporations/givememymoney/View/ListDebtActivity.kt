@@ -30,12 +30,12 @@ class ListDebtActivity : AppCompatActivity() {
 
         val itemListener: ValueEventListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                // Get Post object and use the values to update the UI
+//                /** Get Post object and use the values to update the UI**/
                 addDataToList(dataSnapshot)
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                // Getting Item failed, log a message
+                /** Getting Item failed, log a message**/
                 Log.w("MainActivity", "loadItem:onCancelled", databaseError.toException())
             }
 
@@ -50,19 +50,19 @@ class ListDebtActivity : AppCompatActivity() {
     fun addDataToList(dataSnapshot: DataSnapshot) {
 
         val items = dataSnapshot.children.iterator()
-        //Check if current database contains any collection
+        /**Check if current database contains any collection**/
         if (items.hasNext()) {
             val toDoListened = items.next()
             val itemsIterator = toDoListened.children.iterator()
 
-            //check if the collection has any to do items or not
+            /**check if the collection has any to do items or not**/
             while (itemsIterator.hasNext()) {
 
-                //get current item
+                /**get current item**/
                 val currentItem = itemsIterator.next()
                 val debtItem = Debt.create()
 
-                //get current data in a map
+                /**get current data in a map**/
                 val map = currentItem.getValue() as HashMap<String, Any>
 
                 //key will return Firebase ID
