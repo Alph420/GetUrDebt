@@ -17,22 +17,17 @@ class ProfileDebtActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile_debt)
-        configureViewModel()
-        populateList()
+
         avatar!!.setOnClickListener { selectAvatar() }
         save_debt!!.setOnClickListener { save() }
     }
 
+    /*
     private fun initDebtProfile() {
         if (debt!!.img == null) avatar!!.setImageResource(R.drawable.ic_person_green) else avatar!!.setImageURI(Uri.parse(debt!!.img))
         name_debt!!.setText(debt!!.name)
         object_debt!!.setText(debt!!.reason)
         amount_debt!!.setText(debt!!.amount.toString())
-    }
-
-    private fun configureViewModel() {
-       // val mViewModelFactory = Injection.provideViewModelFactory(this)
-       // mProfileDebtViewModel = ViewModelProvider(this, mViewModelFactory).get(ProfileDebtViewModel::class.java)
     }
 
     private fun populateList() {
@@ -44,6 +39,7 @@ class ProfileDebtActivity : AppCompatActivity() {
         }
        // mProfileDebtViewModel!!.getDebtsById(Constant.idDebt)!!.observe(this, debtObserver)
     }
+ */
 
     fun selectAvatar() {
         val intent = Intent(Intent.ACTION_PICK)
@@ -67,7 +63,6 @@ class ProfileDebtActivity : AppCompatActivity() {
         val amountstring = amount_debt!!.text.toString()
         val amount = amountstring.toLong()
         debt!!.amount = amount
-       // mProfileDebtViewModel!!.updateDebt(debt)
         finish()
     }
 
