@@ -5,19 +5,23 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import butterknife.OnClick
 import com.alphacorporations.givememymoney.R
 import com.alphacorporations.givememymoney.View.DebtAdapter.DeleteTaskListener
 import com.alphacorporations.givememymoney.model.Debt
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
 class ListDebtActivity : AppCompatActivity(), DeleteTaskListener {
-    // UI Components
+
+    //PRIVATE VAR
+    private lateinit var database: FirebaseDatabase
     private var adapter: DebtAdapter? = null
-    private var mDebtList: MutableList<Debt?> = ArrayList()
+
+    //DEBT LIST
+    var debtList:MutableList<Debt>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,8 +34,7 @@ class ListDebtActivity : AppCompatActivity(), DeleteTaskListener {
     }
 
     private fun initList() {
-        populateList()
-        adapter = DebtAdapter(mDebtList, this)
+
     }
 
     @OnClick(R.id.add_debt)
@@ -39,31 +42,22 @@ class ListDebtActivity : AppCompatActivity(), DeleteTaskListener {
         ActivityCompat.startActivity(this, Intent(this, AddDebtActivity::class.java), null)
     }
 
-    private fun populateList() {
-        val debtObserver = Observer { debtList: MutableList<Debt?>? ->
-            if (debtList != null) {
-                mDebtList = debtList
-                updateTasks()
-            }
-        }
-        //model!!.debts!!.observe(this, debtObserver)
-    }
 
 
     override fun onDeleteDebt(debt: Debt?) {
-        mDebtList.remove(debt)
+        debtList!!.remove(debt)
         //model.deleteDebt(debt!!.id)
         updateTasks()
     }
 
     private fun updateTasks() {
-        if (mDebtList.isEmpty()) {
+        if (debtList!!.isEmpty()) {
             lbl_no_task.visibility = View.VISIBLE
             list_money.visibility = View.GONE
         } else {
             lbl_no_task.visibility = View.GONE
             list_money.visibility = View.VISIBLE
-            adapter!!.updateTasks(mDebtList)
+            adapter!!.updateTasks(debtList!!)
         }
     }
 }

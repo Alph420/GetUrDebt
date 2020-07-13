@@ -20,16 +20,19 @@ class LoginActivity : AppCompatActivity() {
 
         val intent = Intent(this, ListDebtActivity::class.java)
 
+        //Click sur le btn login
         bottom_login.setOnClickListener {
             val email = email_edit_text.text.toString()
             val password = password_edit_text.text.toString()
 
             FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this) { task ->
+                        //Si connexion est bonne start l'app
                         if (task.isSuccessful) {
                             startActivity(intent)
                         }
-                        else{
+                        //Sinon retour a l'ecran d'enregistrement
+                        else {
 
                         }
                     }

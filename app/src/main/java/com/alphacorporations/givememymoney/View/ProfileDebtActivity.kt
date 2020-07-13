@@ -4,10 +4,8 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import com.alphacorporations.givememymoney.Constant
 import com.alphacorporations.givememymoney.R
 import com.alphacorporations.givememymoney.model.Debt
 import kotlinx.android.synthetic.main.activity_profile_debt.*
@@ -28,7 +26,7 @@ class ProfileDebtActivity : AppCompatActivity() {
     private fun initDebtProfile() {
         if (debt!!.img == null) avatar!!.setImageResource(R.drawable.ic_person_green) else avatar!!.setImageURI(Uri.parse(debt!!.img))
         name_debt!!.setText(debt!!.name)
-        object_debt!!.setText(debt!!.`object`)
+        object_debt!!.setText(debt!!.reason)
         amount_debt!!.setText(debt!!.amount.toString())
     }
 
@@ -66,7 +64,7 @@ class ProfileDebtActivity : AppCompatActivity() {
 
     private fun save() {
         debt!!.name = name_debt!!.text.toString()
-        debt!!.`object` = object_debt!!.text.toString()
+        debt!!.reason = object_debt!!.text.toString()
         val amountstring = amount_debt!!.text.toString()
         val amount = amountstring.toInt()
         debt!!.amount = amount

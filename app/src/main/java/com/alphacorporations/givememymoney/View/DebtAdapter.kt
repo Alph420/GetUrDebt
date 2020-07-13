@@ -58,7 +58,6 @@ class DebtAdapter
 
         //got to debt profile
         debtViewHolder.itemView.setOnClickListener { v: View? ->
-            Constant.idDebt = debts[position]!!.id
             EventBus.getDefault().post(OpenDebtEvent((v)!!))
             println(Constant.idDebt)
         }
