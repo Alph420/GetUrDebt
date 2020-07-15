@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.alphacorporations.givememymoney.model.Debt
 
 
-class DebtAdapter(private val list: MutableList<Debt>)
+class DebtAdapter(private val list: MutableList<Debt>?)
     : RecyclerView.Adapter<DebtViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DebtViewHolder {
@@ -14,10 +14,10 @@ class DebtAdapter(private val list: MutableList<Debt>)
         return DebtViewHolder(inflater, parent)
     }
 
-    override fun getItemCount(): Int=list.size
+    override fun getItemCount(): Int=list!!.size
 
     override fun onBindViewHolder(holder: DebtViewHolder, position: Int) {
-        val debt: Debt = list[position]
+        val debt: Debt = list!![position]
         holder.bind(debt,position,list)
     }
 

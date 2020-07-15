@@ -11,38 +11,49 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import butterknife.OnClick
 import com.alphacorporations.givememymoney.R
-import com.alphacorporations.givememymoney.event.DeleteMeetingEvent
 import com.alphacorporations.givememymoney.model.Debt
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_main.*
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
 
 
 class ListDebtActivity : AppCompatActivity() {
 
     //GLOBAL VARIABLES
-    var debtList: MutableList<Debt> = mutableListOf()
+    var debtList: MutableList<Debt>? = null
     lateinit var adapter: DebtAdapter
     private val db = Firebase.firestore
-    private lateinit var collections:CollectionReference
+    private  var colletions:CollectionReference = db.collection("DebtList")
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        collections = db.collection("DebtList")
-        initList(collections)
-        setAdapter()
+        initList()
+
+        val mLayoutManager = LinearLayoutManager(this)
+        list_money.layoutManager = mLayoutManager
+        list_money.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+        list_money.adapter = DebtAdapter(debtList!!)
 
         add_debt.setOnClickListener { addDebt() }
     }
 
-     fun initList(collection: CollectionReference? = null) {
+    fun initList() {
+        getDataFromFirebase()
+        list_money.adapter = debtList?.let { DebtAdapter(it) }
+    }
 
-        collection!!.get().addOnSuccessListener { result ->
+
+    @OnClick(R.id.add_debt)
+    fun addDebt() {
+        ActivityCompat.startActivity(this, Intent(this, AddDebtActivity::class.java), null)
+    }
+
+     fun getDataFromFirebase() {
+        var listDebtFromFirebase: MutableList<Debt> = arrayListOf()
+        colletions.get().addOnSuccessListener { result ->
             for (document in result) {
                 Log.d(Context.ACTIVITY_SERVICE, "${document.id} => ${document.data}")
                 val img = document.data["img"].toString()
@@ -50,9 +61,9 @@ class ListDebtActivity : AppCompatActivity() {
                 val reason = document.data["reason"].toString()
                 val date = document.data["date"].toString()
                 val amount = document.data["amount"].toString()
-
-                debtList.add(Debt(document.id, img, name, reason, date, amount.toLong()))
+                listDebtFromFirebase.add(Debt(document.id, img, name, reason, date, amount.toLong()))
             }
+            debtList = listDebtFromFirebase
             updateTasks()
         }
                 .addOnFailureListener { exception ->
@@ -60,21 +71,8 @@ class ListDebtActivity : AppCompatActivity() {
                 }
     }
 
-    private fun setAdapter() {
-        val mLayoutManager = LinearLayoutManager(this)
-        list_money.layoutManager = mLayoutManager
-        list_money.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
-        adapter = DebtAdapter(debtList)
-        list_money.adapter = DebtAdapter(debtList)
-    }
-
-    @OnClick(R.id.add_debt)
-    fun addDebt() {
-        ActivityCompat.startActivity(this, Intent(this, AddDebtActivity::class.java), null)
-    }
-
-     fun updateTasks() {
-        if (debtList.isEmpty()) {
+    fun updateTasks() {
+        if (debtList?.isEmpty()!!) {
             lbl_no_task.visibility = View.VISIBLE
             list_money.visibility = View.GONE
         } else {
@@ -84,9 +82,14 @@ class ListDebtActivity : AppCompatActivity() {
     }
 
 
-
-    override fun onPostResume() {
-        super.onPostResume()
+    override fun onResume() {
+        super.onResume()
+        println("Resume");
         initList()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        println("Start")
     }
 }
