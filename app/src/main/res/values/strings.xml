@@ -4,7 +4,7 @@
     <string name="aucun_mendiant_a_raquetter">Aucun mendiant a raquetter</string>
     <string name="Date">Date</string>
     <string name="identite"><![CDATA[prenom & nom]]></string>
-    <string name="title_activity_splash">SplashActivity</string>
+    <string name="title_activity_splash">GiveMeMyMoney</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>

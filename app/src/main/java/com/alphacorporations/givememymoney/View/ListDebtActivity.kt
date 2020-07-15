@@ -1,82 +1,71 @@
 package com.alphacorporations.givememymoney.View
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import butterknife.OnClick
 import com.alphacorporations.givememymoney.R
+import com.alphacorporations.givememymoney.event.DeleteMeetingEvent
 import com.alphacorporations.givememymoney.model.Debt
-import com.google.firebase.database.*
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_main.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+
 
 class ListDebtActivity : AppCompatActivity() {
 
     //GLOBAL VARIABLES
     var debtList: MutableList<Debt> = mutableListOf()
     lateinit var adapter: DebtAdapter
-    var mDatabase: DatabaseReference? = null
+    private val db = Firebase.firestore
+    private lateinit var collections:CollectionReference
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        mDatabase = FirebaseDatabase.getInstance().reference
-        adapter = DebtAdapter(this, debtList)
-        list_money.adapter = adapter
-
-        val itemListener: ValueEventListener = object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-//                /** Get Post object and use the values to update the UI**/
-                addDataToList(dataSnapshot)
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                /** Getting Item failed, log a message**/
-                Log.w("MainActivity", "loadItem:onCancelled", databaseError.toException())
-            }
-
-        }
-
-        mDatabase!!.orderByKey().addListenerForSingleValueEvent(itemListener)
+        collections = db.collection("DebtList")
+        initList(collections)
+        setAdapter()
 
         add_debt.setOnClickListener { addDebt() }
     }
 
+     fun initList(collection: CollectionReference? = null) {
 
-    fun addDataToList(dataSnapshot: DataSnapshot) {
+        collection!!.get().addOnSuccessListener { result ->
+            for (document in result) {
+                Log.d(Context.ACTIVITY_SERVICE, "${document.id} => ${document.data}")
+                val img = document.data["img"].toString()
+                val name = document.data["name"].toString()
+                val reason = document.data["reason"].toString()
+                val date = document.data["date"].toString()
+                val amount = document.data["amount"].toString()
 
-        val items = dataSnapshot.children.iterator()
-        /**Check if current database contains any collection**/
-        if (items.hasNext()) {
-            val toDoListened = items.next()
-            val itemsIterator = toDoListened.children.iterator()
-
-            /**check if the collection has any to do items or not**/
-            while (itemsIterator.hasNext()) {
-
-                /**get current item**/
-                val currentItem = itemsIterator.next()
-                val debtItem = Debt.create()
-
-                /**get current data in a map**/
-                val map = currentItem.getValue() as HashMap<String, Any>
-
-                //key will return Firebase ID
-                debtItem.id = currentItem.key
-                debtItem.img = map["img"] as String?
-                debtItem.name = map["name"] as String?
-                debtItem.reason = map["reason"] as String?
-                debtItem.date = map["date"] as String?
-                debtItem.amount = map["amount"] as Long?
-                Log.v("MainActivity", debtItem.id + debtItem.name)
-                debtList.add(debtItem)
+                debtList.add(Debt(document.id, img, name, reason, date, amount.toLong()))
             }
+            updateTasks()
         }
-        adapter.notifyDataSetChanged()
+                .addOnFailureListener { exception ->
+                    Log.w(Context.ACTIVITY_SERVICE, "Error getting documents.", exception)
+                }
+    }
+
+    private fun setAdapter() {
+        val mLayoutManager = LinearLayoutManager(this)
+        list_money.layoutManager = mLayoutManager
+        list_money.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+        adapter = DebtAdapter(debtList)
+        list_money.adapter = DebtAdapter(debtList)
     }
 
     @OnClick(R.id.add_debt)
@@ -84,20 +73,20 @@ class ListDebtActivity : AppCompatActivity() {
         ActivityCompat.startActivity(this, Intent(this, AddDebtActivity::class.java), null)
     }
 
-
-    fun onDeleteDebt(debt: Debt?) {
-        debtList.remove(debt)
-        updateTasks()
-    }
-
-    private fun updateTasks() {
+     fun updateTasks() {
         if (debtList.isEmpty()) {
             lbl_no_task.visibility = View.VISIBLE
             list_money.visibility = View.GONE
         } else {
             lbl_no_task.visibility = View.GONE
             list_money.visibility = View.VISIBLE
-            adapter.notifyDataSetChanged()
         }
+    }
+
+
+
+    override fun onPostResume() {
+        super.onPostResume()
+        initList()
     }
 }

@@ -17,12 +17,12 @@
         android:textColor="@color/dark"
         />
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_money"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:listitem="@layout/item_money">
-    </ListView>
+    </androidx.recyclerview.widget.RecyclerView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_debt"
