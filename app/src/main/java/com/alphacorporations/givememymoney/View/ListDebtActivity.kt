@@ -52,6 +52,8 @@ class ListDebtActivity : AppCompatActivity() {
     }
 
      fun getDataFromFirebase() {
+
+         println("ENTRER")
         var listDebtFromFirebase: MutableList<Debt> = arrayListOf()
         colletions.get().addOnSuccessListener { result ->
             for (document in result) {
@@ -69,7 +71,9 @@ class ListDebtActivity : AppCompatActivity() {
                 .addOnFailureListener { exception ->
                     Log.w(Context.ACTIVITY_SERVICE, "Error getting documents.", exception)
                 }
-    }
+         println("SORTIS")
+
+     }
 
     fun updateTasks() {
         if (debtList?.isEmpty()!!) {
