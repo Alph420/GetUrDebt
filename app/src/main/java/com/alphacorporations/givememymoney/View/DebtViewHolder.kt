@@ -2,6 +2,7 @@ package com.alphacorporations.givememymoney.View
 
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,11 +12,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
+import com.alphacorporations.givememymoney.Constant
 import com.alphacorporations.givememymoney.R
 import com.alphacorporations.givememymoney.model.Debt
 import com.bumptech.glide.Glide
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+
 
 /**
 Created by Alph4 le 15/07/2020.
@@ -40,10 +43,10 @@ class DebtViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
     }
 
     fun bind(debt: Debt, pos: Int, list: MutableList<Debt>) {
-        if (debt.img.equals("null")!!) debtImg?.let { Glide.with(itemView.context).load(R.drawable.ic_person_green).circleCrop().into(it) } else debtImg?.let { Glide.with(itemView).load(debt.img).circleCrop().into(it) }
+        if (debt.img.equals("null")) debtImg?.let { Glide.with(itemView.context).load(R.drawable.ic_person_green).circleCrop().into(it) } else debtImg?.let { Glide.with(itemView).load(debt.img).circleCrop().into(it) }
         lblDebtName?.text = debt.name
-        if (debt.date?.equals("null")!!) lblDebtDate?.text = "" else lblDebtDate?.text = debt.date
-        lblDebtAmount?.text = debt.amount.toString() + "€"
+        if (debt.date?.equals("null") == true) lblDebtDate?.text = "" else lblDebtDate?.text = debt.date
+        lblDebtAmount?.text = debt.amount.toString().plus("€")
 
         /**Confirmation delete debt**/
         imgDelete!!.setOnClickListener { view: View ->
@@ -53,13 +56,14 @@ class DebtViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
             builder1.setPositiveButton(
                     "Supprimer"
             ) { dialog, _ ->
-                db.collection("DebtList").document(list.get(pos).id.toString())
+                list.removeAt(pos)
+                dialog.cancel()
+                db.collection(Constant.FIREBASE_ITEM).document(debt.id.toString())
                         .delete()
                         .addOnSuccessListener { Log.d(Context.ACTIVITY_SERVICE, "DocumentSnapshot successfully deleted!") }
-                        .addOnFailureListener { e -> Log.w(Context.ACTIVITY_SERVICE, "Error deleting document", e) }
-                list.removeAt(pos)
-                ListDebtActivity().initList()
-                dialog.cancel()
+                        .addOnFailureListener { Log.w(Context.ACTIVITY_SERVICE, "Error deleting document") }
+                view.context.startActivity(Intent(view.context, LoadingActivity::class.java))
+
             }
             builder1.setNegativeButton(
                     "Annuler"
@@ -68,5 +72,4 @@ class DebtViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
             alert11.show()
         }
     }
-
 }

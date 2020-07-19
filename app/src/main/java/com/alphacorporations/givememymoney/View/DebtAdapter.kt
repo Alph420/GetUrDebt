@@ -1,12 +1,13 @@
 package com.alphacorporations.givememymoney.View
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.alphacorporations.givememymoney.model.Debt
 
 
-class DebtAdapter(private val list: MutableList<Debt>?)
+class DebtAdapter(private val c:Context,private val list: MutableList<Debt>?)
     : RecyclerView.Adapter<DebtViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DebtViewHolder {

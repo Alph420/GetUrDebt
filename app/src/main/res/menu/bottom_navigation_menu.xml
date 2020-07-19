@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_list"
+        android:enabled="true"
+        android:icon="@drawable/ic_list_white"
+        android:iconTint="@color/white"
+        android:title="@string/bottom_navigation_menu_list_debt"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_add"
+        android:icon="@drawable/ic_dollar"
+        android:enabled="true"
+        android:title="@string/bottom_navigation_menu_add_debt"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_profil"
+        android:icon="@drawable/ic_person_green"
+        android:enabled="true"
+        android:title="@string/bottom_navigation_menu_profile"
+        app:showAsAction="ifRoom" />
+</menu>

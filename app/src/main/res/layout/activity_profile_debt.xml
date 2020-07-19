@@ -80,7 +80,6 @@
             android:background="@drawable/rounded_text"
             android:hint="Raison" />
 
-
         <Button
             android:id="@+id/save_debt"
             android:layout_width="150dp"

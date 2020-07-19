@@ -1,20 +1,23 @@
 <resources>
     <string name="app_name">Give Me My Money</string>
     <string name="save">save</string>
-    <string name="aucun_mendiant_a_raquetter">Aucun mendiant a raquetter</string>
+    <string name="no_debt">Aucune reclamation à faire</string>
     <string name="Date">Date</string>
     <string name="identite"><![CDATA[prenom & nom]]></string>
     <string name="title_activity_splash">GiveMeMyMoney</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
     <string name="title">Give me my money</string>
     <string name="please">Please</string>
-    <string name="loginbtn">Login</string>
+    <string name="loginbtn">Se connecter</string>
+
+    <!-- BOTTOM NAVIGATION VIEW -->
+    <string name="bottom_navigation_menu_profile">Profil</string>
+    <string name="bottom_navigation_menu_add_debt">Ajouter</string>
+    <string name="bottom_navigation_menu_list_debt">Liste</string>
+    <string name="email">Email</string>
+    <string name="password">Mot de passe</string>
+    <string name="sign_up">S\'inscrire</string>
+    <string name="error">Email ou mot de passe incorrect</string>
 
 </resources>

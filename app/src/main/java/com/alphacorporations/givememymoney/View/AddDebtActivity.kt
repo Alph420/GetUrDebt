@@ -125,52 +125,33 @@ class AddDebtActivity : AppCompatActivity() {
     }
 
     private fun saving() {
-        if (setDate) {
-            val data = hashMapOf(
-                    "img" to avatarUri,
-                    "name" to first_name_debt!!.text.toString() + " " + last_name_debt!!.text,
-                    "reason" to if (object_debt.toString() == "") null else object_debt!!.text.toString(),
-                    "date" to date,
-                    "amount" to if (amount_debt!!.text.toString() == "") 0 else amount_debt!!.text.toString().toLong()
-            )
 
-            db.collection("DebtList")
-                    .add(data)
-                    .addOnSuccessListener { documentReference ->
-                        Log.e(Context.ACTIVITY_SERVICE, "DocumentSnapshot added with ID: ${documentReference.id}")
-                    }
-                    .addOnFailureListener { e ->
-                        Log.w(Context.ACTIVITY_SERVICE, "Error adding document", e)
-                    }
+        //TODO ANIMATION FULL SCREEN SAVING -PROGRESS DIALOG-
 
-            finish()
-        } else {
+        val data = hashMapOf(
+                "img" to avatarUri,
+                "name" to first_name_debt!!.text.toString() + " " + last_name_debt!!.text,
+                "reason" to if (object_debt.toString() == "") null else object_debt!!.text.toString(),
+                "date" to date,
+                "amount" to if (amount_debt!!.text.toString() == "") 0 else amount_debt!!.text.toString().toLong()
+        )
 
-            val data = hashMapOf(
-                    "img" to avatarUri,
-                    "name" to first_name_debt!!.text.toString() + " " + last_name_debt!!.text,
-                    "reason" to if (object_debt.toString() == "") null else object_debt!!.text.toString(),
-                    "date" to date,
-                    "amount" to if (amount_debt!!.text.toString() == "") 0 else amount_debt!!.text.toString().toLong()
-            )
-
-            // Add a new document with a generated ID
-            db.collection("DebtList")
-                    .add(data)
-                    .addOnSuccessListener { documentReference ->
-                        Log.e(Context.ACTIVITY_SERVICE, "DocumentSnapshot added with ID: ${documentReference.id}")
-                    }
-                    .addOnFailureListener { e ->
-                        Log.w(Context.ACTIVITY_SERVICE, "Error adding document", e)
-                    }
+        db.collection(FIREBASE_ITEM)
+                .add(data)
+                .addOnSuccessListener { documentReference ->
+                    Log.e(Context.ACTIVITY_SERVICE, "DocumentSnapshot added with ID: ${documentReference.id}")
+                    finish()
+                }
+                .addOnFailureListener { e ->
+                    Log.w(Context.ACTIVITY_SERVICE, "Error adding document", e)
+                    //TODO ERROR MESSAGE
+                }
 
 
-            finish()
-        }
     }
 
 
-    companion object {
-        const val SELECT_PICTURE = 1
-    }
+companion object {
+    const val SELECT_PICTURE = 1
+}
 }
