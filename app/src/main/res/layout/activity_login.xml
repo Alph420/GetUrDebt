@@ -30,7 +30,8 @@
         android:layout_marginEnd="16dp"
         android:background="@color/white"
         android:hint="@string/email"
-        android:textColorHint="@color/colorPrimary"
+        app:boxBackgroundMode="filled"
+        app:endIconMode="clear_text"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -57,8 +58,8 @@
         android:layout_marginEnd="16dp"
         android:background="@color/white"
         android:hint="@string/password"
-        android:textColorHint="@color/colorPrimary"
-        app:boxStrokeColor="@color/red"
+        app:boxBackgroundMode="filled"
+        app:endIconMode="password_toggle"
 
 
         app:layout_constraintBottom_toBottomOf="parent"
@@ -92,7 +93,6 @@
         android:backgroundTint="@color/white"
         android:fontFamily="@font/antic"
         android:text="@string/sign_up"
-        android:textColor="@color/colorPrimary"
 
 
         android:textSize="14sp"
