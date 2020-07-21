@@ -8,6 +8,7 @@ import com.alphacorporations.givememymoney.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_profile_user.*
 
 
 /**
@@ -24,31 +25,11 @@ class ProfileUserActivity : AppCompatActivity() {
 
         initProfie(user)
 
-        this.configureBottomView()
-
-
     }
 
 
     fun initProfie(user: FirebaseUser?) {
-       // name_user.text = user.get
-    }
-
-    fun configureBottomView() {
-        activity_main_bottom_navigation.setOnNavigationItemSelectedListener {
-            when (it.itemId) {
-                R.id.action_list -> {
-                    ActivityCompat.startActivity(this, Intent(this, ListDebtActivity::class.java), null)
-                }
-                R.id.action_add -> {
-                    ActivityCompat.startActivity(this, Intent(this, AddDebtActivity::class.java), null)
-                }
-                R.id.action_profil -> {
-                    ActivityCompat.startActivity(this, Intent(this, ProfileUserActivity::class.java), null)
-                }
-            }
-            true
-        }
+       // first_name_user.text = user.
     }
 
 
