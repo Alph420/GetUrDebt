@@ -185,9 +185,4 @@ public class AddDebtActivity extends AppCompatActivity {
         }
     }
 
-    private void configureViewModel() {
-        ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(this);
-        this.mListDebtViewModel = ViewModelProviders.of(this, mViewModelFactory).get(ListDebtViewModel.class);
-    }
-
 }

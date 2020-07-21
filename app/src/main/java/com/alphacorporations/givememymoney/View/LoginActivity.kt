@@ -23,7 +23,7 @@ class LoginActivity : AppCompatActivity() {
 
         val intent = Intent(this, ListDebtActivity::class.java)
 
-        if(email.isEmpty() || password.isEmpty()){ btn_sign_up.Ac}
+        //if(email.isEmpty() || password.isEmpty()){ btn_sign_up.Ac}
 
 
         //Click sur le btn login

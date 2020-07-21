@@ -42,7 +42,7 @@ class ListDebtActivity : AppCompatActivity() {
                     ActivityCompat.startActivity(this, Intent(this, AddDebtActivity::class.java), null)
                 }
                 R.id.action_profil -> {
-                    ActivityCompat.startActivity(this, Intent(this, MyProfileActivity::class.java), null)
+                    ActivityCompat.startActivity(this, Intent(this, ProfileUserActivity::class.java), null)
                 }
             }
             true

@@ -21,7 +21,6 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -30,12 +29,16 @@
             android:name=".View.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".View.ProfileDebtActivity" />
-        <activity android:name=".View.AddDebtActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".View.LoadingActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".View.ListDebtActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".View.AddDebtActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".View.LoadingActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".View.ListDebtActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".View.ProfileUserActivity" />
 
         <meta-data
             android:name="preloaded_fonts"
