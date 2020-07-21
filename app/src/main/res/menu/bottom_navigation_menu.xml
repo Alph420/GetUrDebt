@@ -16,7 +16,7 @@
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_profil"
-        android:icon="@drawable/ic_person_green"
+        android:icon="@drawable/ic_person_white"
         android:enabled="true"
         android:title="@string/bottom_navigation_menu_profile"
         app:showAsAction="ifRoom" />

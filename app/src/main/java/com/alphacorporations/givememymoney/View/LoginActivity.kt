@@ -23,6 +23,9 @@ class LoginActivity : AppCompatActivity() {
 
         val intent = Intent(this, ListDebtActivity::class.java)
 
+        if(email.isEmpty() || password.isEmpty()){ btn_sign_up.Ac}
+
+
         //Click sur le btn login
         bottom_login.setOnClickListener {
             val email = email_edit_text.text.toString()
@@ -44,6 +47,9 @@ class LoginActivity : AppCompatActivity() {
         btn_sign_up.setOnClickListener {
             val email = email_edit_text.text.toString()
             val password = password_edit_text.text.toString()
+
+
+
             FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
