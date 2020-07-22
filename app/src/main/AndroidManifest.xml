@@ -29,6 +29,8 @@
             android:name=".View.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".View.ProfileDebtActivity" />
+        <activity android:name=".View.SignUpActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".View.AddDebtActivity"
             android:theme="@style/AppTheme.NoActionBar" />

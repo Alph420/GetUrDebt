@@ -17,7 +17,13 @@
     <string name="bottom_navigation_menu_list_debt">Liste</string>
     <string name="email">Email</string>
     <string name="password">Mot de passe</string>
-    <string name="sign_up">S\'inscrire</string>
+    <string name="sign_up">S\'inscrire ?</string>
     <string name="error">Email ou mot de passe incorrect</string>
+    <string name="signup">s\'inscrire</string>
+    <string name="password_confirmation">Confirmer mot de passe</string>
+    <string name="pseudo">Pseudo</string>
+    <string name="error_login">Email ou mot de passe incorrect</string>
+    <string name="error_sign_up">Email déjà utiliser</string>
+
 
 </resources>
