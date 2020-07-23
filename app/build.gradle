@@ -68,6 +68,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-perf:19.0.8'
     implementation 'com.google.firebase:firebase-auth:19.3.2'
 
+    // ML Kit
+    implementation 'com.google.mlkit:translate:16.1.0'
+
 
 
 }

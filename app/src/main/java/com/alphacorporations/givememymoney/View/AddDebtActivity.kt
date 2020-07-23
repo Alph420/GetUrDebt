@@ -2,27 +2,21 @@ package com.alphacorporations.givememymoney.View
 
 import android.app.Activity
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
-import android.nfc.Tag
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.view.View
-import android.widget.*
-import androidx.appcompat.app.AlertDialog
+import android.widget.DatePicker
 import androidx.appcompat.app.AppCompatActivity
 import com.alphacorporations.givememymoney.Constant.FIREBASE_ITEM
 import com.alphacorporations.givememymoney.R
-import com.alphacorporations.givememymoney.model.Debt
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_add_debt.*
+import java.text.SimpleDateFormat
 import java.util.*
 
 class AddDebtActivity : AppCompatActivity() {
@@ -103,11 +97,15 @@ class AddDebtActivity : AppCompatActivity() {
     }
 
     private fun date() {
+
+
         //TODO FORMAT STRING DATE
         calendar.get(Calendar.DAY_OF_MONTH)
         calendar.get(Calendar.MONTH)
         calendar.get(Calendar.YEAR)
-        date = calendar.time.toString()
+        val format = SimpleDateFormat("dd/mm/yyyy")
+
+        date = format.format(calendar.time)
     }
 
     private fun saving() {
