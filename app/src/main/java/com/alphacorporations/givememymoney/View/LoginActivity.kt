@@ -20,22 +20,19 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        val intent = Intent(this, ListDebtActivity::class.java)
-
 
         //Click sur le btn login
         btn_sign_in.setOnClickListener {
             val email = email_edit_text.text.toString()
             val password = password_edit_text.text.toString()
 
-            if(email.isEmpty() || password.isEmpty()){
-                error_msg.text = if(email.isEmpty()) "Veuillez rentrer une adresse email" else "Veuillez rentrer un mot de passe"
+            if (email.isEmpty() || password.isEmpty()) {
+                error_msg.text = if (email.isEmpty()) "Veuillez rentrer une adresse email" else "Veuillez rentrer un mot de passe"
                 error_msg.visibility = View.VISIBLE
                 btn_sign_in.highlightColor = Color.RED
-            }
-            else{
+            } else {
                 error_msg.visibility = View.INVISIBLE
-                connexion(email,password)
+                connexion(email, password)
             }
         }
 
@@ -51,7 +48,8 @@ class LoginActivity : AppCompatActivity() {
                 .addOnCompleteListener(this) { task ->
                     //Si connexion est bonne start l'app
                     if (task.isSuccessful) {
-                        startActivity(intent)
+                        startActivity(Intent(this, ListDebtActivity::class.java))
+                        finish()
                     }
                     //Sinon retour a l'ecran d'enregistrement
                     else {

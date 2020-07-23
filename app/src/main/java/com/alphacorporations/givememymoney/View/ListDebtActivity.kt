@@ -14,7 +14,7 @@ import com.alphacorporations.givememymoney.model.Debt
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_list_debt.*
 
 
 class ListDebtActivity : AppCompatActivity() {
@@ -27,7 +27,7 @@ class ListDebtActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_list_debt)
         this.configureBottomView()
         initList()
     }

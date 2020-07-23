@@ -36,8 +36,11 @@ class SignUpActivity : AppCompatActivity() {
 
             verification()
 
-            if(valide) signUp(email, password)
-            //TODO else msg erreur
+            if (valide) signUp(email, password)
+            else{
+                error_msg.text = "Email deja utiliser"
+                error_msg.visibility = View.VISIBLE
+            }
 
 
         }
@@ -55,6 +58,7 @@ class SignUpActivity : AppCompatActivity() {
                         // Sign in success, update UI with the signed-in user's information
                         println("createUserWithEmail:success")
                         startActivity(intent)
+                        finish()
                     } else {
                         error_msg.text = getString(R.string.error_sign_up)
                         error_msg.visibility = View.VISIBLE

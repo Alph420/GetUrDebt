@@ -23,6 +23,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_add_debt.*
+import java.util.*
 
 class AddDebtActivity : AppCompatActivity() {
 
@@ -31,6 +32,7 @@ class AddDebtActivity : AppCompatActivity() {
     private var avatarUri: String? = null
     private var date: String? = null
     private var picker: DatePicker? = null
+    private var calendar: Calendar = Calendar.getInstance()
 
     //ANOTHER VAR
     var imageUri: Uri? = null
@@ -43,14 +45,6 @@ class AddDebtActivity : AppCompatActivity() {
 
         avatar!!.setOnClickListener { selectAvatar() }
 
-        switch_date!!.setOnCheckedChangeListener { _: CompoundButton?, _: Boolean ->
-            if (switch_date!!.isChecked) {
-                println("VISIBLE")
-                date_debt!!.visibility = View.VISIBLE
-            } else {
-                date_debt!!.visibility = View.INVISIBLE
-            }
-        }
         first_name_debt!!.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
                 if (s.isNotEmpty()) {
@@ -85,8 +79,10 @@ class AddDebtActivity : AppCompatActivity() {
                 }
             }
         })
-        date_debt!!.setOnClickListener { date() }
-        save_debt!!.setOnClickListener { saving() }
+        save_debt!!.setOnClickListener {
+            date()
+            saving()
+        }
     }
 
 
@@ -107,21 +103,11 @@ class AddDebtActivity : AppCompatActivity() {
     }
 
     private fun date() {
-        val builderDatePicker = AlertDialog.Builder(this)
-        picker = DatePicker(this)
-        picker!!.calendarViewShown = false
-        builderDatePicker.setView(picker)
-        builderDatePicker.setPositiveButton("OK") { _: DialogInterface?, _: Int ->
-            val year = picker!!.year
-            val mon = picker!!.month
-            val day = picker!!.dayOfMonth
-            date = "$day/$mon/$year"
-            setDate = true
-        }
-        builderDatePicker.setNegativeButton(
-                "Annuler"
-        ) { dialog: DialogInterface, _: Int -> dialog.cancel() }
-        builderDatePicker.show()
+        //TODO FORMAT STRING DATE
+        calendar.get(Calendar.DAY_OF_MONTH)
+        calendar.get(Calendar.MONTH)
+        calendar.get(Calendar.YEAR)
+        date = calendar.time.toString()
     }
 
     private fun saving() {
@@ -151,7 +137,7 @@ class AddDebtActivity : AppCompatActivity() {
     }
 
 
-companion object {
-    const val SELECT_PICTURE = 1
-}
+    companion object {
+        const val SELECT_PICTURE = 1
+    }
 }

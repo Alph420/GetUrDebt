@@ -45,7 +45,7 @@ class DebtViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
     fun bind(debt: Debt, pos: Int, list: MutableList<Debt>) {
         if (debt.img.equals("null")) debtImg?.let { Glide.with(itemView.context).load(R.drawable.ic_person_green).circleCrop().into(it) } else debtImg?.let { Glide.with(itemView).load(debt.img).circleCrop().into(it) }
         lblDebtName?.text = debt.name
-        if (debt.date?.equals("null") == true) lblDebtDate?.text = "" else lblDebtDate?.text = debt.date
+        if (debt.date?.equals("null") == true) lblDebtDate?.visibility=View.GONE else lblDebtDate?.text = debt.date
         lblDebtAmount?.text = debt.amount.toString().plus("€")
 
         /**Confirmation delete debt**/

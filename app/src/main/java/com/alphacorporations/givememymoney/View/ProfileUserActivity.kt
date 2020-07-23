@@ -7,7 +7,7 @@ import androidx.core.app.ActivityCompat
 import com.alphacorporations.givememymoney.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_list_debt.*
 import kotlinx.android.synthetic.main.activity_profile_user.*
 
 
@@ -25,11 +25,19 @@ class ProfileUserActivity : AppCompatActivity() {
 
         initProfie(user)
 
+        log_out_user_profil.setOnClickListener { logOut() }
+
+    }
+
+    fun logOut() {
+        FirebaseAuth.getInstance().signOut()
+        startActivity(Intent(this, LoginActivity::class.java))
+        finish()
     }
 
 
     fun initProfie(user: FirebaseUser?) {
-       // first_name_user.text = user.
+        // first_name_user.text = user.
     }
 
 
