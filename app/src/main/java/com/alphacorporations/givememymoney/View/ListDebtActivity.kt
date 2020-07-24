@@ -71,7 +71,7 @@ class ListDebtActivity : AppCompatActivity() {
             }
 
             debtList = listDebtFromFirebase
-            if(debtList.isEmpty()) progressBar_loading_debt.visibility = View.VISIBLE
+            if(debtList.isEmpty()) progressBar_loading_debt.visibility = View.GONE
             setAndUseAdapter()
         }
                 .addOnFailureListener { exception ->
