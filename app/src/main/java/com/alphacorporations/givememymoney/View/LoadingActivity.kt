@@ -4,7 +4,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
-import android.view.View
 import android.view.WindowManager
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
@@ -16,7 +15,7 @@ Created by Alph4 le 18/07/2020.
 Projet: Give Me My Money
  **/
 
-private val SPLAH_SCREEN: Long = 1500
+private const val SPLAH_SCREEN: Long = 1500
 
 class LoadingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +30,7 @@ class LoadingActivity : AppCompatActivity() {
 
         val handler = Handler()
         val runnable = Runnable {
-                progressBar.progress += SPLAH_SCREEN.toInt()
+            progressBar.progress += SPLAH_SCREEN.toInt()
             startActivity(Intent(this, ListDebtActivity::class.java))
         }
         handler.postDelayed(runnable, SPLAH_SCREEN)

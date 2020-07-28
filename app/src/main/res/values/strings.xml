@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Give Me My Money</string>
     <string name="save">Sauvegarder</string>
-    <string name="no_debt">Aucune reclamation à faire</string>
+    <string name="no_debt">Aucune réclamation à faire</string>
     <string name="Date">Date</string>
     <string name="identite"><![CDATA[prenom & nom]]></string>
     <string name="title_activity_splash">GiveMeMyMoney</string>
@@ -15,6 +15,8 @@
     <string name="bottom_navigation_menu_profile">Profil</string>
     <string name="bottom_navigation_menu_add_debt">Ajouter</string>
     <string name="bottom_navigation_menu_list_debt">Liste</string>
+
+
     <string name="email">Email</string>
     <string name="password">Mot de passe</string>
     <string name="sign_up">S\'inscrire ?</string>
@@ -23,7 +25,7 @@
     <string name="password_confirmation">Confirmer mot de passe</string>
     <string name="pseudo">Pseudo</string>
     <string name="error_login">Email ou mot de passe incorrect</string>
-    <string name="error_sign_up">Email déjà utiliser</string>
+    <string name="error_sign_up">Email déjà utilisé</string>
     <string name="log_out">Déconnexion</string>
 
 
