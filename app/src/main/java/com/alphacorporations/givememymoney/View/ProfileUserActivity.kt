@@ -2,12 +2,11 @@ package com.alphacorporations.givememymoney.View
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import com.alphacorporations.givememymoney.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import kotlinx.android.synthetic.main.activity_list_debt.*
 import kotlinx.android.synthetic.main.activity_profile_user.*
 
 
@@ -37,7 +36,7 @@ class ProfileUserActivity : AppCompatActivity() {
 
 
     fun initProfie(user: FirebaseUser?) {
-        // first_name_user.text = user.
+        first_name_user.setText(user?.email)
     }
 
 

@@ -11,7 +11,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.widget.DatePicker
 import androidx.appcompat.app.AppCompatActivity
-import com.alphacorporations.givememymoney.Constant.FIREBASE_ITEM
+import com.alphacorporations.givememymoney.Constant.FIREBASE_COLLECTION_ID
 import com.alphacorporations.givememymoney.R
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -120,7 +120,7 @@ class AddDebtActivity : AppCompatActivity() {
                 "amount" to if (amount_debt!!.text.toString() == "") 0 else amount_debt!!.text.toString().toLong()
         )
 
-        db.collection(FIREBASE_ITEM)
+        db.collection(FIREBASE_COLLECTION_ID)
                 .add(data)
                 .addOnSuccessListener { documentReference ->
                     Log.e(Context.ACTIVITY_SERVICE, "DocumentSnapshot added with ID: ${documentReference.id}")

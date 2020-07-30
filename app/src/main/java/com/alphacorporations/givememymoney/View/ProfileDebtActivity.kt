@@ -22,25 +22,6 @@ class ProfileDebtActivity : AppCompatActivity() {
         save_debt!!.setOnClickListener { save() }
     }
 
-    /*
-    private fun initDebtProfile() {
-        if (debt!!.img == null) avatar!!.setImageResource(R.drawable.ic_person_green) else avatar!!.setImageURI(Uri.parse(debt!!.img))
-        name_debt!!.setText(debt!!.name)
-        object_debt!!.setText(debt!!.reason)
-        amount_debt!!.setText(debt!!.amount.toString())
-    }
-
-    private fun populateList() {
-        val debtObserver = Observer { debtList: Debt? ->
-            if (debtList != null) {
-                debt = debtList
-                initDebtProfile()
-            }
-        }
-       // mProfileDebtViewModel!!.getDebtsById(Constant.idDebt)!!.observe(this, debtObserver)
-    }
- */
-
     fun selectAvatar() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
@@ -60,8 +41,7 @@ class ProfileDebtActivity : AppCompatActivity() {
     private fun save() {
         debt!!.name = name_debt!!.text.toString()
         debt!!.reason = object_debt!!.text.toString()
-        val amountstring = amount_debt!!.text.toString()
-        val amount = amountstring.toLong()
+        val amount = amount_debt!!.text.toString().toLong()
         debt!!.amount = amount
         finish()
     }

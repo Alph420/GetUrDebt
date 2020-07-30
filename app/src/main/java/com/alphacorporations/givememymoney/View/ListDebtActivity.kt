@@ -8,7 +8,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.alphacorporations.givememymoney.Constant.FIREBASE_ITEM
+import com.alphacorporations.givememymoney.Constant.FIREBASE_COLLECTION_ID
 import com.alphacorporations.givememymoney.R
 import com.alphacorporations.givememymoney.model.Debt
 import com.google.firebase.firestore.CollectionReference
@@ -22,13 +22,14 @@ class ListDebtActivity : AppCompatActivity() {
     //GLOBAL VARIABLES
     private var debtList: MutableList<Debt> = arrayListOf()
     private val db = Firebase.firestore
-    private var colletions: CollectionReference = db.collection(FIREBASE_ITEM)
+    private  var colletions: CollectionReference = db.collection(FIREBASE_COLLECTION_ID)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_debt)
         this.configureBottomView()
+
         initList()
     }
 

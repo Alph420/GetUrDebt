@@ -6,6 +6,7 @@ import android.os.Handler
 import android.view.WindowManager
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
+import com.alphacorporations.givememymoney.Constant.FIREBASE_COLLECTION_ID
 import com.alphacorporations.givememymoney.R
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_splash.*
@@ -31,6 +32,7 @@ class SplashActivity : AppCompatActivity() {
         val runnable = Runnable {
             //Si l'utilisateur est different de null -> start l'app
             if (user != null) {
+                FIREBASE_COLLECTION_ID = user.uid
                 startActivity(intentList)
                 finish()
             }

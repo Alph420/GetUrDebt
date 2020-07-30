@@ -58,7 +58,7 @@ class DebtViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
             ) { dialog, _ ->
                 list.removeAt(pos)
                 dialog.cancel()
-                db.collection(Constant.FIREBASE_ITEM).document(debt.id.toString())
+                db.collection(Constant.FIREBASE_COLLECTION_ID).document(debt.id.toString())
                         .delete()
                         .addOnSuccessListener { Log.d(Context.ACTIVITY_SERVICE, "DocumentSnapshot successfully deleted!") }
                         .addOnFailureListener { Log.w(Context.ACTIVITY_SERVICE, "Error deleting document") }
