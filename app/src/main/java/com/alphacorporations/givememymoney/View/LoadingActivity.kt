@@ -8,6 +8,7 @@ import android.view.WindowManager
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import com.alphacorporations.givememymoney.R
+import com.alphacorporations.givememymoney.View.listActivity.ListDebtActivity
 import kotlinx.android.synthetic.main.transition_loading.*
 
 /**

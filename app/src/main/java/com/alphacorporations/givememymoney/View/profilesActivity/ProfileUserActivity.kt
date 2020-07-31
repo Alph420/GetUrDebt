@@ -1,10 +1,10 @@
-package com.alphacorporations.givememymoney.View
+package com.alphacorporations.givememymoney.View.profilesActivity
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
 import androidx.appcompat.app.AppCompatActivity
 import com.alphacorporations.givememymoney.R
+import com.alphacorporations.givememymoney.View.startActivity.LoginActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_profile_user.*
@@ -26,6 +26,7 @@ class ProfileUserActivity : AppCompatActivity() {
 
         log_out_user_profil.setOnClickListener { logOut() }
 
+
     }
 
     fun logOut() {
@@ -36,7 +37,8 @@ class ProfileUserActivity : AppCompatActivity() {
 
 
     fun initProfie(user: FirebaseUser?) {
-        first_name_user.setText(user?.email)
+
+        user_name.setText(user?.email)
     }
 
 

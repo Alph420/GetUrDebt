@@ -1,4 +1,4 @@
-package com.alphacorporations.givememymoney.View
+package com.alphacorporations.givememymoney.View.listActivity
 
 import android.content.Context
 import android.content.Intent
@@ -10,6 +10,8 @@ import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alphacorporations.givememymoney.Constant.FIREBASE_COLLECTION_ID
 import com.alphacorporations.givememymoney.R
+import com.alphacorporations.givememymoney.View.AddDebtActivity
+import com.alphacorporations.givememymoney.View.profilesActivity.ProfileUserActivity
 import com.alphacorporations.givememymoney.model.Debt
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.ktx.firestore

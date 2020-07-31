@@ -1,4 +1,4 @@
-package com.alphacorporations.givememymoney.View
+package com.alphacorporations.givememymoney.View.listActivity
 
 import android.content.Context
 import android.content.DialogInterface
@@ -14,6 +14,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.alphacorporations.givememymoney.Constant
 import com.alphacorporations.givememymoney.R
+import com.alphacorporations.givememymoney.View.LoadingActivity
 import com.alphacorporations.givememymoney.model.Debt
 import com.bumptech.glide.Glide
 import com.google.firebase.firestore.ktx.firestore

@@ -1,11 +1,9 @@
-package com.alphacorporations.givememymoney.View
+package com.alphacorporations.givememymoney.View.profilesActivity
 
 import android.app.Activity
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import com.alphacorporations.givememymoney.R
 import com.alphacorporations.givememymoney.model.Debt
 import kotlinx.android.synthetic.main.activity_profile_debt.*

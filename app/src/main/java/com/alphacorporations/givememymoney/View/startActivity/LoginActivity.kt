@@ -1,4 +1,4 @@
-package com.alphacorporations.givememymoney.View
+package com.alphacorporations.givememymoney.View.startActivity
 
 import android.content.Intent
 import android.graphics.Color
@@ -7,6 +7,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.alphacorporations.givememymoney.Constant.FIREBASE_COLLECTION_ID
 import com.alphacorporations.givememymoney.R
+import com.alphacorporations.givememymoney.View.listActivity.ListDebtActivity
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_login.*
 

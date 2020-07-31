@@ -1,4 +1,4 @@
-package com.alphacorporations.givememymoney.View
+package com.alphacorporations.givememymoney.View.listActivity
 
 import android.content.Context
 import android.view.LayoutInflater
