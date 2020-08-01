@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.alphacorporations.givememymoney.Constant.SELECT_PICTURE
 import com.alphacorporations.givememymoney.R
 import com.alphacorporations.givememymoney.model.Debt
 import kotlinx.android.synthetic.main.activity_profile_debt.*
@@ -42,9 +43,5 @@ class ProfileDebtActivity : AppCompatActivity() {
         val amount = amount_debt!!.text.toString().toLong()
         debt!!.amount = amount
         finish()
-    }
-
-    companion object {
-        const val SELECT_PICTURE = 1
     }
 }

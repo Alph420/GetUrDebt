@@ -40,7 +40,7 @@
         app:layout_constraintVertical_bias="0.202">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/peusdo_edit_text"
+            android:id="@+id/pseudo_edit_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="textEmailAddress"
@@ -71,6 +71,7 @@
             android:id="@+id/email_edit_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:inputType="textEmailAddress"
             android:maxLines="1">
 
 

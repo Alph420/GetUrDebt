@@ -33,6 +33,7 @@ class LoadingActivity : AppCompatActivity() {
         val runnable = Runnable {
             progressBar.progress += SPLAH_SCREEN.toInt()
             startActivity(Intent(this, ListDebtActivity::class.java))
+            finish()
         }
         handler.postDelayed(runnable, SPLAH_SCREEN)
     }

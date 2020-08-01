@@ -3,7 +3,7 @@
     <string name="save">Sauvegarder</string>
     <string name="no_debt">Aucune réclamation à faire</string>
     <string name="Date">Date</string>
-    <string name="identite"><![CDATA[prenom & nom]]></string>
+    <string name="identite">Pseudo</string>
     <string name="title_activity_splash">GiveMeMyMoney</string>
 
 
@@ -29,6 +29,9 @@
     <string name="log_out">Déconnexion</string>
     <string name="email_error">Veuillez rentrer une email valide</string>
     <string name="password_error">Mot de passe non identiques</string>
+    <string name="country_user">Pays</string>
+    <string name="birthday_user">date de naissance</string>
+    <string name="email_user">Email</string>
 
 
 </resources>

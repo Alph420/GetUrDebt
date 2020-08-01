@@ -60,7 +60,7 @@ class ListDebtActivity : AppCompatActivity() {
     private fun getDataFromFirebase() {
         progressBar_loading_debt.visibility = View.VISIBLE
 
-        colletions.get().addOnSuccessListener { result ->
+        colletions.whereEqualTo("isDebt",true).get().addOnSuccessListener { result ->
             val listDebtFromFirebase: MutableList<Debt> = arrayListOf()
 
             for (document in result) {

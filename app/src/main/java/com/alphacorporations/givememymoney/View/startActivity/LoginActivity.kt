@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.alphacorporations.givememymoney.Constant
 import com.alphacorporations.givememymoney.Constant.FIREBASE_COLLECTION_ID
 import com.alphacorporations.givememymoney.R
 import com.alphacorporations.givememymoney.View.listActivity.ListDebtActivity
@@ -50,7 +51,8 @@ class LoginActivity : AppCompatActivity() {
                 .addOnCompleteListener(this) { task ->
                     //Si connexion est bonne start l'app
                     if (task.isSuccessful) {
-                        FIREBASE_COLLECTION_ID = email
+                        val user = FirebaseAuth.getInstance().currentUser
+                        FIREBASE_COLLECTION_ID = user!!.uid
                         startActivity(Intent(this, ListDebtActivity::class.java))
                         finish()
                     }

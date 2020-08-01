@@ -5,11 +5,16 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.alphacorporations.givememymoney.Constant
+import com.alphacorporations.givememymoney.Constant.SELECT_PICTURE
 import com.alphacorporations.givememymoney.R
-import com.alphacorporations.givememymoney.View.AddDebtActivity
 import com.alphacorporations.givememymoney.View.startActivity.LoginActivity
+import com.alphacorporations.givememymoney.model.User
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_profile_user.*
@@ -22,21 +27,34 @@ Projet: Give Me My Money
  **/
 class ProfileUserActivity : AppCompatActivity() {
 
+    //GLOBAL VARIABLES
     lateinit var mStorageRef: StorageReference
+    private val db = Firebase.firestore
+    private var colletions: CollectionReference = db.collection(Constant.FIREBASE_COLLECTION_ID)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile_user)
 
         mStorageRef = FirebaseStorage.getInstance().getReference()
-
-        val user = FirebaseAuth.getInstance().currentUser
-
-        initProfie(user)
+        getUserData()
 
         log_out_user_profil.setOnClickListener { logOut() }
         user_avatar.setOnClickListener { setAvatar() }
 
+    }
+
+    private fun getUserData() {
+        val docRef = colletions.document("UserID")
+        docRef.get()
+                .addOnSuccessListener { document ->
+                    initProfie(User(
+                            document.data?.get("Country").toString(),
+                            document.data?.get("birthDate").toString(),
+                            document.data?.get("email").toString(),
+                            document.data?.get("pseudo").toString()
+                    ))
+                }
     }
 
     fun logOut() {
@@ -46,19 +64,19 @@ class ProfileUserActivity : AppCompatActivity() {
     }
 
 
-    fun initProfie(user: FirebaseUser?) {
+    fun initProfie(user: User) {
         user_avatar.setImageResource(R.drawable.ic_add_a_photo)
-        user_name.setText(user?.displayName.toString())
-        user_email.setText(user?.email)
-        birthday_user.setText("")
-        user_country.setText("")
+        user_name.setText(user.pseudo)
+        user_email.setText(user.email)
+        birthday_user.setText(user.birthDate)
+        user_country.setText(user.country)
     }
 
     fun setAvatar() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
         intent.action = Intent.ACTION_OPEN_DOCUMENT
-        startActivityForResult(Intent.createChooser(intent, ""), AddDebtActivity.SELECT_PICTURE)
+        startActivityForResult(Intent.createChooser(intent, ""), SELECT_PICTURE)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -66,7 +84,7 @@ class ProfileUserActivity : AppCompatActivity() {
         if (resultCode == Activity.RESULT_OK) {
             var imageUri = data!!.data
             if (imageUri != null) imageUri.path?.let { saveImgOnFirebaseStorage(it) }
-            user_avatar!!.setImageURI(imageUri)
+            Glide.with(user_avatar).load(imageUri).circleCrop().into(user_avatar)
         }
     }
 
@@ -86,11 +104,6 @@ class ProfileUserActivity : AppCompatActivity() {
                     println("FAILED")
                 }
     }
-
-    companion object {
-        const val SELECT_PICTURE = 1
-    }
-
 
     override fun onResume() {
         super.onResume()

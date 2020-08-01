@@ -10,8 +10,10 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.widget.DatePicker
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.alphacorporations.givememymoney.Constant.FIREBASE_COLLECTION_ID
+import com.alphacorporations.givememymoney.Constant.SELECT_PICTURE
 import com.alphacorporations.givememymoney.R
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -22,23 +24,19 @@ import java.util.*
 class AddDebtActivity : AppCompatActivity() {
 
     //PRIVATE VAR
-    val db = Firebase.firestore
+    private val db = Firebase.firestore
     private var avatarUri: String? = null
     private var date: String? = null
-    private var picker: DatePicker? = null
     private var calendar: Calendar = Calendar.getInstance()
 
     //ANOTHER VAR
     var imageUri: Uri? = null
-    var setDate = false
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_debt)
 
         avatar!!.setOnClickListener { selectAvatar() }
-
         first_name_debt!!.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
                 if (s.isNotEmpty()) {
@@ -73,10 +71,7 @@ class AddDebtActivity : AppCompatActivity() {
                 }
             }
         })
-        save_debt!!.setOnClickListener {
-            date()
-            saving()
-        }
+        save_debt!!.setOnClickListener { saving() }
     }
 
 
@@ -97,27 +92,22 @@ class AddDebtActivity : AppCompatActivity() {
     }
 
     private fun date() {
-
-
-        //TODO FORMAT STRING DATE
         calendar.get(Calendar.DAY_OF_MONTH)
         calendar.get(Calendar.MONTH)
         calendar.get(Calendar.YEAR)
-        val format = SimpleDateFormat("dd/mm/yyyy")
-
-        date = format.format(calendar.time)
+        date = SimpleDateFormat("dd/MM/yyyy").format(calendar.time)
     }
 
     private fun saving() {
-
-        //TODO ANIMATION FULL SCREEN SAVING -PROGRESS DIALOG-
+        date()
 
         val data = hashMapOf(
                 "img" to avatarUri,
                 "name" to first_name_debt!!.text.toString() + " " + last_name_debt!!.text,
                 "reason" to if (object_debt.toString() == "") null else object_debt!!.text.toString(),
                 "date" to date,
-                "amount" to if (amount_debt!!.text.toString() == "") 0 else amount_debt!!.text.toString().toLong()
+                "amount" to if (amount_debt!!.text.toString() == "") 0 else amount_debt!!.text.toString().toLong(),
+                "isDebt" to true
         )
 
         db.collection(FIREBASE_COLLECTION_ID)
@@ -128,14 +118,8 @@ class AddDebtActivity : AppCompatActivity() {
                 }
                 .addOnFailureListener { e ->
                     Log.w(Context.ACTIVITY_SERVICE, "Error adding document", e)
-                    //TODO ERROR MESSAGE
+                    Toast.makeText(this, "Erreur dans l'enregistrement de la dette", Toast.LENGTH_LONG)
                 }
 
-
-    }
-
-
-    companion object {
-        const val SELECT_PICTURE = 1
     }
 }
