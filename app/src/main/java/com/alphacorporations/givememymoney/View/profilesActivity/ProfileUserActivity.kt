@@ -1,11 +1,15 @@
 package com.alphacorporations.givememymoney.View.profilesActivity
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.alphacorporations.givememymoney.Constant
+import com.alphacorporations.givememymoney.Constant.FIREBASE_COLLECTION_ID
 import com.alphacorporations.givememymoney.Constant.SELECT_PICTURE
 import com.alphacorporations.givememymoney.R
 import com.alphacorporations.givememymoney.View.startActivity.LoginActivity
@@ -18,6 +22,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_profile_user.*
+import kotlinx.android.synthetic.main.activity_sign_up.*
 import java.io.File
 
 
@@ -30,15 +35,16 @@ class ProfileUserActivity : AppCompatActivity() {
     //GLOBAL VARIABLES
     lateinit var mStorageRef: StorageReference
     private val db = Firebase.firestore
-    private var colletions: CollectionReference = db.collection(Constant.FIREBASE_COLLECTION_ID)
+    private var colletions: CollectionReference = db.collection(FIREBASE_COLLECTION_ID)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile_user)
 
-        mStorageRef = FirebaseStorage.getInstance().getReference()
+        mStorageRef = FirebaseStorage.getInstance().reference
         getUserData()
 
+        save_user_profil.setOnClickListener { saveUserChange() }
         log_out_user_profil.setOnClickListener { logOut() }
         user_avatar.setOnClickListener { setAvatar() }
 
@@ -54,6 +60,23 @@ class ProfileUserActivity : AppCompatActivity() {
                             document.data?.get("email").toString(),
                             document.data?.get("pseudo").toString()
                     ))
+                }
+    }
+
+    private fun saveUserChange(){
+        val data = hashMapOf(
+                "pseudo" to user_name.text.toString(),
+                "email" to user_email.text.toString(),
+                "birthDate" to birthday_user.text.toString(),
+                "Country" to user_country.text.toString()
+        )
+
+        db.collection(FIREBASE_COLLECTION_ID).document("UserID")
+                .set(data)
+                .addOnSuccessListener { finish() }
+                .addOnFailureListener { e ->
+                    Log.w(Context.ACTIVITY_SERVICE, "Error adding document", e)
+                    Toast.makeText(this, "Erreur dans l'enregistrement de la dette", Toast.LENGTH_LONG)
                 }
     }
 
