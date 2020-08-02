@@ -24,7 +24,7 @@ class ListDebtActivity : AppCompatActivity() {
     //GLOBAL VARIABLES
     private var debtList: MutableList<Debt> = arrayListOf()
     private val db = Firebase.firestore
-    private  var colletions: CollectionReference = db.collection(FIREBASE_COLLECTION_ID)
+    private var colletions: CollectionReference = db.collection(FIREBASE_COLLECTION_ID)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,7 +60,7 @@ class ListDebtActivity : AppCompatActivity() {
     private fun getDataFromFirebase() {
         progressBar_loading_debt.visibility = View.VISIBLE
 
-        colletions.whereEqualTo("isDebt",true).get().addOnSuccessListener { result ->
+        colletions.whereEqualTo("isDebt", true).get().addOnSuccessListener { result ->
             val listDebtFromFirebase: MutableList<Debt> = arrayListOf()
 
             for (document in result) {
