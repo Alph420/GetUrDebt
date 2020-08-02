@@ -77,9 +77,6 @@ class ListDebtActivity : AppCompatActivity() {
             progressBar_loading_debt.visibility = View.GONE
             setAndUseAdapter()
         }
-                .addOnFailureListener { exception ->
-                    Log.w(Context.ACTIVITY_SERVICE, "Error getting documents.", exception)
-                }
     }
 
     private fun updateTasks() {

@@ -1,5 +1,6 @@
 package com.alphacorporations.givememymoney.View.profilesActivity
 
+import android.R.attr.radius
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -9,6 +10,8 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.alphacorporations.givememymoney.Constant.FIREBASE_COLLECTION_ID
+import com.alphacorporations.givememymoney.Constant.FIREBASE_IMG_MARGIN
+import com.alphacorporations.givememymoney.Constant.FIREBASE_IMG_RADIUS
 import com.alphacorporations.givememymoney.Constant.FIREBASE_IMG_RESIZE
 import com.alphacorporations.givememymoney.Constant.SELECT_PICTURE
 import com.alphacorporations.givememymoney.R
@@ -21,6 +24,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 import kotlinx.android.synthetic.main.activity_profile_user.*
 
 
@@ -35,7 +39,7 @@ class ProfileUserActivity : AppCompatActivity() {
     private val db = Firebase.firestore
     private var colletions: CollectionReference = db.collection(FIREBASE_COLLECTION_ID)
     lateinit var userFirebaseID: String
-    lateinit var imageUri: Uri
+    var imageUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,6 +89,11 @@ class ProfileUserActivity : AppCompatActivity() {
                 }
     }
 
+    fun saveImgOnFirebaseStorage() {
+        val riversRef: StorageReference = mStorageRef.child("images/$FIREBASE_COLLECTION_ID")
+        imageUri?.let { riversRef.putFile(it) }
+    }
+
     fun logOut() {
         FirebaseAuth.getInstance().signOut()
         startActivity(Intent(this, LoginActivity::class.java))
@@ -101,12 +110,10 @@ class ProfileUserActivity : AppCompatActivity() {
     }
 
     fun setUserAvatar(user: User) {
-        if (user.userAvatarPath.equals(null)) user_avatar.setImageResource(R.drawable.ic_add_a_photo)
+        if (user.userAvatarPath.equals("null")) user_avatar.setImageResource(R.drawable.ic_add_a_photo)
         else {
-            mStorageRef.child("images/$FIREBASE_COLLECTION_ID$FIREBASE_IMG_RESIZE").downloadUrl
-                    .addOnSuccessListener { Glide.with(this).load(it).circleCrop().into(user_avatar) }
+            mStorageRef.child("images/$FIREBASE_COLLECTION_ID$FIREBASE_IMG_RESIZE").downloadUrl.addOnSuccessListener { Glide.with(this).load(it).transform(RoundedCornersTransformation(FIREBASE_IMG_RADIUS, FIREBASE_IMG_MARGIN)).into(user_avatar) }
         }
-
     }
 
     fun setAvatar() {
@@ -119,15 +126,11 @@ class ProfileUserActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
-            imageUri = data!!.data!!
-            Glide.with(this).load(imageUri).circleCrop().into(user_avatar)
-
+            if (data != null) {
+                imageUri = data.data!!
+                Glide.with(this).load(imageUri).transform(RoundedCornersTransformation(FIREBASE_IMG_RADIUS, FIREBASE_IMG_MARGIN)).into(user_avatar)
+            }
         }
-    }
-
-    fun saveImgOnFirebaseStorage() {
-        val riversRef: StorageReference = mStorageRef.child("images/$FIREBASE_COLLECTION_ID")
-        riversRef.putFile(imageUri)
     }
 
     override fun onResume() {

@@ -1,9 +1,7 @@
 package com.alphacorporations.givememymoney.View.listActivity
 
-import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,12 +11,17 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.alphacorporations.givememymoney.Constant
+import com.alphacorporations.givememymoney.Constant.FIREBASE_IMG_MARGIN
+import com.alphacorporations.givememymoney.Constant.FIREBASE_IMG_RADIUS
 import com.alphacorporations.givememymoney.R
 import com.alphacorporations.givememymoney.View.LoadingActivity
 import com.alphacorporations.givememymoney.model.Debt
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
+import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 
 
 /**
@@ -28,7 +31,7 @@ Projet: Give Me My Money
 class DebtViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         RecyclerView.ViewHolder(inflater.inflate(R.layout.item_money, parent, false)) {
 
-    val db = Firebase.firestore
+    private val db = Firebase.firestore
     private var debtImg: ImageView? = null
     private var lblDebtName: TextView? = null
     private var lblDebtDate: TextView? = null
@@ -44,9 +47,17 @@ class DebtViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
     }
 
     fun bind(debt: Debt, pos: Int, list: MutableList<Debt>) {
-        if (debt.img.equals("null")) debtImg?.let { Glide.with(itemView.context).load(R.drawable.ic_person_white).circleCrop().into(it) } else debtImg?.let { Glide.with(itemView).load(debt.img).circleCrop().into(it) }
+        /**if debtImg doesn't exist draw the little white person**/
+        if (debt.img.equals("null")) debtImg?.let {
+            Glide.with(itemView.context).load(R.drawable.ic_person_white).into(it)
+        }
+        /**else draw de debtImg**/
+        else {
+            debtImg?.let { Glide.with(itemView).load(debt.img).transform(CircleCrop()).into(it) }
+        }
+
         lblDebtName?.text = debt.name
-        if (debt.date?.equals("null") == true) lblDebtDate?.visibility = View.GONE else lblDebtDate?.text = debt.date
+        lblDebtDate?.text = debt.date
         lblDebtAmount?.text = debt.amount.toString().plus("€")
 
         /**Confirmation delete debt**/
@@ -59,10 +70,7 @@ class DebtViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
             ) { dialog, _ ->
                 list.removeAt(pos)
                 dialog.cancel()
-                db.collection(Constant.FIREBASE_COLLECTION_ID).document(debt.id.toString())
-                        .delete()
-                        .addOnSuccessListener { Log.d(Context.ACTIVITY_SERVICE, "DocumentSnapshot successfully deleted!") }
-                        .addOnFailureListener { Log.w(Context.ACTIVITY_SERVICE, "Error deleting document") }
+                db.collection(Constant.FIREBASE_COLLECTION_ID).document(debt.id.toString()).delete()
                 view.context.startActivity(Intent(view.context, LoadingActivity::class.java))
 
             }

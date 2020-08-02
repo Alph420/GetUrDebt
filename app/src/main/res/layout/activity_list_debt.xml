@@ -69,8 +69,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:menu="@menu/bottom_navigation_menu" />
 
-
-
     </FrameLayout>
 
     <ProgressBar

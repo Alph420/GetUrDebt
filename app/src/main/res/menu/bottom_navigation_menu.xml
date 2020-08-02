@@ -10,14 +10,14 @@
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_add"
-        android:icon="@drawable/ic_dollar"
         android:enabled="true"
+        android:icon="@drawable/ic_dollar"
         android:title="@string/bottom_navigation_menu_add_debt"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
     <item
         android:id="@+id/action_profil"
-        android:icon="@drawable/ic_person_white"
         android:enabled="true"
+        android:icon="@drawable/ic_person_white"
         android:title="@string/bottom_navigation_menu_profile"
         app:showAsAction="ifRoom" />
 </menu>

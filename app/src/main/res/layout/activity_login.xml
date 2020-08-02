@@ -85,18 +85,16 @@
         android:layout_width="261dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="64dp"
-        android:layout_marginTop="8dp"
 
         android:layout_marginEnd="64dp"
         android:alpha="0.8"
-        android:background="@drawable/border_btn"
         android:backgroundTint="@color/white"
         android:fontFamily="@font/antic"
         android:text="@string/sign_up"
-
-
         android:textSize="14sp"
+        android:textColor="@color/colorPrimary"
         android:textStyle="normal|bold"
+
         app:layout_constraintBottom_toTopOf="@+id/btn_sign_in"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
