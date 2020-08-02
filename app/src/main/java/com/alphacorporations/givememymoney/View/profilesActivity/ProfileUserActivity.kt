@@ -8,8 +8,8 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.alphacorporations.givememymoney.Constant
 import com.alphacorporations.givememymoney.Constant.FIREBASE_COLLECTION_ID
+import com.alphacorporations.givememymoney.Constant.FIREBASE_IMG_RESIZE
 import com.alphacorporations.givememymoney.Constant.SELECT_PICTURE
 import com.alphacorporations.givememymoney.R
 import com.alphacorporations.givememymoney.View.startActivity.LoginActivity
@@ -22,8 +22,6 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_profile_user.*
-import kotlinx.android.synthetic.main.activity_sign_up.*
-import java.io.File
 
 
 /**
@@ -33,15 +31,18 @@ Projet: Give Me My Money
 class ProfileUserActivity : AppCompatActivity() {
 
     //GLOBAL VARIABLES
-    lateinit var mStorageRef: StorageReference
+    var mStorageRef: StorageReference = FirebaseStorage.getInstance().reference
     private val db = Firebase.firestore
     private var colletions: CollectionReference = db.collection(FIREBASE_COLLECTION_ID)
+    lateinit var userFirebaseID: String
+    lateinit var imageUri: Uri
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile_user)
 
-        mStorageRef = FirebaseStorage.getInstance().reference
+        userFirebaseID = FirebaseAuth.getInstance().currentUser!!.uid
+
         getUserData()
 
         save_user_profil.setOnClickListener { saveUserChange() }
@@ -55,6 +56,7 @@ class ProfileUserActivity : AppCompatActivity() {
         docRef.get()
                 .addOnSuccessListener { document ->
                     initProfie(User(
+                            document.data?.get("userAvatarName").toString(),
                             document.data?.get("Country").toString(),
                             document.data?.get("birthDate").toString(),
                             document.data?.get("email").toString(),
@@ -63,8 +65,11 @@ class ProfileUserActivity : AppCompatActivity() {
                 }
     }
 
-    private fun saveUserChange(){
+    private fun saveUserChange() {
+        saveImgOnFirebaseStorage()
+
         val data = hashMapOf(
+                "userAvatarName" to imageUri.toString(),
                 "pseudo" to user_name.text.toString(),
                 "email" to user_email.text.toString(),
                 "birthDate" to birthday_user.text.toString(),
@@ -88,11 +93,20 @@ class ProfileUserActivity : AppCompatActivity() {
 
 
     fun initProfie(user: User) {
-        user_avatar.setImageResource(R.drawable.ic_add_a_photo)
+        setUserAvatar(user)
         user_name.setText(user.pseudo)
         user_email.setText(user.email)
         birthday_user.setText(user.birthDate)
         user_country.setText(user.country)
+    }
+
+    fun setUserAvatar(user: User) {
+        if (user.userAvatarPath.equals(null)) user_avatar.setImageResource(R.drawable.ic_add_a_photo)
+        else {
+            mStorageRef.child("images/$FIREBASE_COLLECTION_ID$FIREBASE_IMG_RESIZE").downloadUrl
+                    .addOnSuccessListener { Glide.with(this).load(it).circleCrop().into(user_avatar) }
+        }
+
     }
 
     fun setAvatar() {
@@ -105,27 +119,15 @@ class ProfileUserActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
-            var imageUri = data!!.data
-            if (imageUri != null) imageUri.path?.let { saveImgOnFirebaseStorage(it) }
-            Glide.with(user_avatar).load(imageUri).circleCrop().into(user_avatar)
+            imageUri = data!!.data!!
+            Glide.with(this).load(imageUri).circleCrop().into(user_avatar)
+
         }
     }
 
-    fun saveImgOnFirebaseStorage(imageUri: String) {
-
-        val file: Uri = Uri.fromFile(File(imageUri))
-        val riversRef: StorageReference = mStorageRef.child("images/")
-
-        riversRef.putFile(file)
-                .addOnSuccessListener { taskSnapshot -> // Get a URL to the uploaded content
-                    val downloadUrl: Uri? = taskSnapshot.uploadSessionUri
-                    println("SUCCESS")
-
-                }
-                .addOnFailureListener {
-                    // Handle unsuccessful uploads
-                    println("FAILED")
-                }
+    fun saveImgOnFirebaseStorage() {
+        val riversRef: StorageReference = mStorageRef.child("images/$FIREBASE_COLLECTION_ID")
+        riversRef.putFile(imageUri)
     }
 
     override fun onResume() {

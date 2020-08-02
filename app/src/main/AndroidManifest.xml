@@ -28,19 +28,26 @@
         <activity
             android:name=".View.startActivity.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity android:name=".View.profilesActivity.ProfileDebtActivity" />
-        <activity android:name=".View.startActivity.SignUpActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity
+            android:name=".View.startActivity.SignUpActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".View.AddDebtActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".View.LoadingActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".View.listActivity.ListDebtActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".View.profilesActivity.ProfileUserActivity" />
+
+        <activity android:name=".View.profilesActivity.ProfileUserActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <meta-data
             android:name="preloaded_fonts"

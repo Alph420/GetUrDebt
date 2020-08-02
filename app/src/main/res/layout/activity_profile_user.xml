@@ -6,19 +6,47 @@
     android:layout_height="match_parent"
     tools:context=".View.profilesActivity.ProfileDebtActivity">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/activity_main_frame_layout">
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:alpha="1">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/bangers"
+                android:gravity="center_horizontal"
+                android:text="@string/app_name"
+                android:textColorHint="@color/white"
+                android:textSize="30sp"
+                android:textStyle="normal" />
+
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
         app:cardCornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
 
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
         app:strokeColor="@color/colorPrimary"
         app:strokeWidth="2dp">
 
@@ -58,7 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="190dp"
+            android:layout_marginTop="200dp"
             android:background="@drawable/rounded_text"
             android:gravity="center"
             android:hint="@string/email_user"
@@ -89,7 +117,7 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:layout_marginTop="190dp"
+            android:layout_marginTop="200dp"
             android:layout_marginEnd="8dp"
             android:background="@drawable/rounded_text"
             android:gravity="center"
@@ -134,7 +162,6 @@
             android:id="@+id/log_out_user_profil"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:backgroundTint="@color/red"
             android:gravity="center"
             android:text="@string/log_out"
