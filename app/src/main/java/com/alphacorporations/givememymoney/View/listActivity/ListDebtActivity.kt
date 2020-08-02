@@ -13,6 +13,8 @@ import com.alphacorporations.givememymoney.R
 import com.alphacorporations.givememymoney.View.AddDebtActivity
 import com.alphacorporations.givememymoney.View.profilesActivity.ProfileUserActivity
 import com.alphacorporations.givememymoney.model.Debt
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -31,6 +33,7 @@ class ListDebtActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_debt)
         this.configureBottomView()
+        adsConfig()
 
         initList()
     }
@@ -97,6 +100,12 @@ class ListDebtActivity : AppCompatActivity() {
         updateTasks()
     }
 
+    fun adsConfig(){
+        MobileAds.initialize(this) { }
+
+        val adRequest: AdRequest = AdRequest.Builder().build()
+        adView.loadAd(adRequest)
+    }
 
     override fun onResume() {
         super.onResume()
