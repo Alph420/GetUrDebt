@@ -33,94 +33,94 @@
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-        tools:layout_editor_absoluteX="6dp">
+        android:layout_height="250dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="@color/white"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
+
 
         <ImageView
             android:id="@+id/avatar"
             android:layout_width="250dp"
             android:layout_height="100dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="20dp"
             android:layout_marginBottom="30dp"
             android:background="@drawable/rounded"
             android:contentDescription="TODO"
             android:src="@drawable/ic_add_a_photo" />
 
+        <EditText
+            android:id="@+id/first_name_debt"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_gravity="start"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="150dp"
+            android:hint="prenom"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textSize="20sp"
+            tools:text="Julien" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="60dp">
-
-            <EditText
-                android:id="@+id/first_name_debt"
-                android:layout_width="200dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:layout_marginStart="10dp"
-                android:hint="prenom"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:textSize="20sp"
-                tools:text="Julien" />
-
-            <EditText
-                android:id="@+id/last_name_debt"
-                android:layout_width="150dp"
-                android:layout_height="50dp"
-                android:layout_gravity="right"
-                android:layout_marginStart="20dp"
-                android:hint="Nom"
-                android:singleLine="true"
-                tools:text="Jennequin" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="50dp">
-
-            <EditText
-                android:id="@+id/object_debt"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginStart="10dp"
-                android:hint="Raison"
-                android:singleLine="true" />
-
-            <EditText
-                android:id="@+id/amount_debt"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginStart="20dp"
-                android:hint="0 €"
-                android:inputType="number" />
-
-        </LinearLayout>
-
-
-        <Button
-            android:id="@+id/save_debt"
+        <EditText
+            android:id="@+id/object_debt"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center"
-            android:layout_marginTop="100dp"
-            android:background="@drawable/border_btn"
-            android:backgroundTint="@color/colorPrimary"
-            android:text="@string/save"
-            android:textColor="@color/white" />
+            android:layout_gravity="start"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="200dp"
+            android:hint="Raison"
+            android:singleLine="true" />
 
-    </LinearLayout>
+        <EditText
+            android:id="@+id/last_name_debt"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_gravity="end"
+            android:layout_marginTop="150dp"
+            android:layout_marginEnd="8dp"
+            android:hint="Nom"
+            android:singleLine="true"
+            tools:text="Jennequin" />
+
+        <EditText
+            android:id="@+id/amount_debt"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="200dp"
+            android:layout_marginEnd="8dp"
+            android:hint="0 €"
+            android:inputType="number" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <Button
+        android:id="@+id/save_debt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:text="@string/save"
+
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
