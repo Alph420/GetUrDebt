@@ -45,11 +45,9 @@ class ListDebtActivity : AppCompatActivity() {
                 }
                 R.id.action_add -> {
                     ActivityCompat.startActivity(this, Intent(this, AddDebtActivity::class.java), null)
-                    finish()
                 }
                 R.id.action_profil -> {
                     ActivityCompat.startActivity(this, Intent(this, ProfileUserActivity::class.java), null)
-                    finish()
                 }
             }
             true
@@ -62,7 +60,7 @@ class ListDebtActivity : AppCompatActivity() {
 
 
     private fun getDataFromFirebase() {
-        progressBar_loading_debt.visibility = View.VISIBLE
+        if (debtList.isEmpty())progressBar_loading_debt.visibility = View.VISIBLE
 
         colletions.whereEqualTo("isDebt", true).get().addOnSuccessListener { result ->
             val listDebtFromFirebase: MutableList<Debt> = arrayListOf()

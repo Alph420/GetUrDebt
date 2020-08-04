@@ -18,7 +18,6 @@ import com.alphacorporations.givememymoney.Constant.FIREBASE_COLLECTION_ID
 import com.alphacorporations.givememymoney.Constant.FIREBASE_IMG_MARGIN
 import com.alphacorporations.givememymoney.Constant.FIREBASE_IMG_RADIUS
 import com.alphacorporations.givememymoney.Constant.FIREBASE_IMG_RESIZE
-import com.alphacorporations.givememymoney.Constant.KEY_NOTIFICATION_ID
 import com.alphacorporations.givememymoney.Constant.NOTIFICATION_ID
 import com.alphacorporations.givememymoney.Constant.SELECT_PICTURE
 import com.alphacorporations.givememymoney.R
@@ -69,7 +68,7 @@ class ProfileUserActivity : AppCompatActivity() {
         val docRef = colletions.document("UserID")
         docRef.get()
                 .addOnSuccessListener { document ->
-                    initProfie(User(
+                    initProfile(User(
                             document.data?.get("userAvatarName").toString(),
                             document.data?.get("Country").toString(),
                             document.data?.get("birthDate").toString(),
@@ -111,7 +110,7 @@ class ProfileUserActivity : AppCompatActivity() {
     }
 
 
-    private fun initProfie(user: User) {
+    private fun initProfile(user: User) {
         setUserAvatar(user)
         user_name.setText(user.pseudo)
         user_email.text = user.email
@@ -135,7 +134,6 @@ class ProfileUserActivity : AppCompatActivity() {
 
     public fun changeEmail() {
         //TODO User can update there email adress
-        // Créer le NotificationChannel, seulement pour API 26+
         // Créer le NotificationChannel, seulement pour API 26+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name: CharSequence = "Notification channel name"

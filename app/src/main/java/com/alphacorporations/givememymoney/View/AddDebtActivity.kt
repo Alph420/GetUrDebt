@@ -127,7 +127,8 @@ class AddDebtActivity : AppCompatActivity() {
                 }
 
     }
-    fun adsConfig(){
+
+    private fun adsConfig() {
         MobileAds.initialize(this) { }
 
         val adRequest: AdRequest = AdRequest.Builder().build()

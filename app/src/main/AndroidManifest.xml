@@ -13,12 +13,14 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <!-- Sample AdMob App ID: ca-app-pub-1745806143462700~4138031960 -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-1745806143462700~4138031960"/>
+            android:value="ca-app-pub-1745806143462700~4138031960" />
+
         <activity
             android:name=".View.startActivity.SplashActivity"
             android:label="@string/app_name"
@@ -50,8 +52,9 @@
             android:name=".View.listActivity.ListDebtActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name=".View.profilesActivity.ProfileUserActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".View.profilesActivity.ProfileUserActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <meta-data
             android:name="preloaded_fonts"
