@@ -16,13 +16,16 @@ Created by Alph4 le 18/07/2020.
 Projet: Give Me My Money
  **/
 
-private const val SPLAH_SCREEN: Long = 1500
+private const val SPLASH_SCREEN: Long = 1500
 
 class LoadingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+
         setContentView(R.layout.transition_loading)
+
         progressBar.progressDrawable.setColorFilter(
                 Color.GREEN, android.graphics.PorterDuff.Mode.SRC_IN);
 
@@ -31,10 +34,10 @@ class LoadingActivity : AppCompatActivity() {
 
         val handler = Handler()
         val runnable = Runnable {
-            progressBar.progress += SPLAH_SCREEN.toInt()
+            progressBar.progress += SPLASH_SCREEN.toInt()
             startActivity(Intent(this, ListDebtActivity::class.java))
             finish()
         }
-        handler.postDelayed(runnable, SPLAH_SCREEN)
+        handler.postDelayed(runnable, SPLASH_SCREEN)
     }
 }
