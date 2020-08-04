@@ -15,6 +15,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.alphacorporations.givememymoney.Constant.FIREBASE_COLLECTION_ID
 import com.alphacorporations.givememymoney.Constant.SELECT_PICTURE
 import com.alphacorporations.givememymoney.R
+import com.alphacorporations.givememymoney.View.listActivity.ListDebtActivity
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_add_debt.*
@@ -35,6 +38,7 @@ class AddDebtActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_debt)
+        adsConfig()
 
         avatar!!.setOnClickListener { selectAvatar() }
         first_name_debt!!.addTextChangedListener(object : TextWatcher {
@@ -114,6 +118,7 @@ class AddDebtActivity : AppCompatActivity() {
                 .add(data)
                 .addOnSuccessListener { documentReference ->
                     Log.e(Context.ACTIVITY_SERVICE, "DocumentSnapshot added with ID: ${documentReference.id}")
+                    startActivity(Intent(this, ListDebtActivity::class.java))
                     finish()
                 }
                 .addOnFailureListener { e ->
@@ -121,5 +126,11 @@ class AddDebtActivity : AppCompatActivity() {
                     Toast.makeText(this, "Erreur dans l'enregistrement de la dette", Toast.LENGTH_LONG)
                 }
 
+    }
+    fun adsConfig(){
+        MobileAds.initialize(this) { }
+
+        val adRequest: AdRequest = AdRequest.Builder().build()
+        adView.loadAd(adRequest)
     }
 }

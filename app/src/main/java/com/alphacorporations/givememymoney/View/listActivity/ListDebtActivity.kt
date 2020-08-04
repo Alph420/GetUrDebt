@@ -33,7 +33,6 @@ class ListDebtActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_debt)
         this.configureBottomView()
-        adsConfig()
 
         initList()
     }
@@ -46,9 +45,11 @@ class ListDebtActivity : AppCompatActivity() {
                 }
                 R.id.action_add -> {
                     ActivityCompat.startActivity(this, Intent(this, AddDebtActivity::class.java), null)
+                    finish()
                 }
                 R.id.action_profil -> {
                     ActivityCompat.startActivity(this, Intent(this, ProfileUserActivity::class.java), null)
+                    finish()
                 }
             }
             true
@@ -100,12 +101,6 @@ class ListDebtActivity : AppCompatActivity() {
         updateTasks()
     }
 
-    fun adsConfig(){
-        MobileAds.initialize(this) { }
-
-        val adRequest: AdRequest = AdRequest.Builder().build()
-        adView.loadAd(adRequest)
-    }
 
     override fun onResume() {
         super.onResume()
