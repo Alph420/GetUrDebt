@@ -11,17 +11,13 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.alphacorporations.givememymoney.Constant
-import com.alphacorporations.givememymoney.Constant.FIREBASE_IMG_MARGIN
-import com.alphacorporations.givememymoney.Constant.FIREBASE_IMG_RADIUS
 import com.alphacorporations.givememymoney.R
 import com.alphacorporations.givememymoney.View.LoadingActivity
 import com.alphacorporations.givememymoney.model.Debt
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
-import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 
 
 /**
@@ -61,24 +57,26 @@ class DebtViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         lblDebtAmount?.text = debt.amount.toString().plus("€")
 
         /**Confirmation delete debt**/
-        imgDelete!!.setOnClickListener { view: View ->
-            val builder1 = AlertDialog.Builder(view.context)
-            builder1.setMessage("Veux tu vraiment supprimer cet dette ?")
-            builder1.setCancelable(true)
-            builder1.setPositiveButton(
-                    "Supprimer"
-            ) { dialog, _ ->
-                list.removeAt(pos)
-                dialog.cancel()
-                db.collection(Constant.FIREBASE_COLLECTION_ID).document(debt.id.toString()).delete()
-                view.context.startActivity(Intent(view.context, LoadingActivity::class.java))
+        imgDelete!!.setOnClickListener { deleteDebt(debt, list, pos, it) }
+    }
 
-            }
-            builder1.setNegativeButton(
-                    "Annuler"
-            ) { dialog: DialogInterface, _: Int -> dialog.cancel() }
-            val alert11 = builder1.create()
-            alert11.show()
+    private fun deleteDebt(debt: Debt, list: MutableList<Debt>, pos: Int, view: View) {
+        val builder1 = AlertDialog.Builder(view.context)
+        builder1.setMessage("Veux tu vraiment supprimer cet dette ?")
+        builder1.setCancelable(true)
+        builder1.setPositiveButton(
+                "Supprimer"
+        ) { dialog, _ ->
+            list.removeAt(pos)
+            dialog.cancel()
+            db.collection(Constant.FIREBASE_COLLECTION_ID).document(debt.id.toString()).delete()
+            view.context.startActivity(Intent(view.context, LoadingActivity::class.java))
+
         }
+        builder1.setNegativeButton(
+                "Annuler"
+        ) { dialog: DialogInterface, _: Int -> dialog.cancel() }
+        val alert11 = builder1.create()
+        alert11.show()
     }
 }

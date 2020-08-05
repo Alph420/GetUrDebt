@@ -60,6 +60,7 @@ class ListDebtActivity : AppCompatActivity() {
 
 
     private fun getDataFromFirebase() {
+
         if (debtList.isEmpty())progressBar_loading_debt.visibility = View.VISIBLE
 
         colletions.whereEqualTo("isDebt", true).get().addOnSuccessListener { result ->
