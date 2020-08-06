@@ -11,6 +11,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.alphacorporations.givememymoney.Constant.DEBT_ID
 import com.alphacorporations.givememymoney.Constant.FIREBASE_COLLECTION_ID
 import com.alphacorporations.givememymoney.Constant.SELECT_PICTURE
 import com.alphacorporations.givememymoney.R
@@ -19,19 +20,20 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_add_debt.*
 import java.text.SimpleDateFormat
 import java.util.*
 
 class AddDebtActivity : AppCompatActivity() {
 
-    //PRIVATE VAR
+    //GOBAL VAR
+    var mStorageRef: StorageReference = FirebaseStorage.getInstance().reference
     private val db = Firebase.firestore
     private var avatarUri: String? = null
     private var date: String? = null
     private var calendar: Calendar = Calendar.getInstance()
-
-    //ANOTHER VAR
     var imageUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -117,15 +119,21 @@ class AddDebtActivity : AppCompatActivity() {
                 .add(data)
                 .addOnSuccessListener { documentReference ->
                     Log.e(Context.ACTIVITY_SERVICE, "DocumentSnapshot added with ID: ${documentReference.id}")
+                    saveImgOnFirebaseStorage(documentReference.id)
                     startActivity(Intent(this, ListDebtActivity::class.java))
                     finish()
                 }
                 .addOnFailureListener { e ->
                     Log.w(Context.ACTIVITY_SERVICE, "Error adding document", e)
-                    Toast.makeText(this, "Erreur dans l'enregistrement de la dette", Toast.LENGTH_LONG)
+                    Toast.makeText(this, "Erreur dans l'enregistrement de la dette", Toast.LENGTH_LONG).show()
                 }
 
     }
+    private fun saveImgOnFirebaseStorage(id: String) {
+        val ref: StorageReference = mStorageRef.child("debt_images/$id")
+        imageUri?.let { ref.putFile(it) }
+    }
+
 
     private fun adsConfig() {
         MobileAds.initialize(this) { }

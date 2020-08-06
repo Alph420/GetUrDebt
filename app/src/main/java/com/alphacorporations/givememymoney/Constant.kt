@@ -4,9 +4,9 @@ object Constant {
 
     /** For img from device **/
     const val SELECT_PICTURE = 1
-
     /** For img resize extension from firebase **/
-    const val FIREBASE_IMG_RESIZE = "_800x800"
+    const val FIREBASE_IMG_USER_RESIZE = "_800x800"
+    const val FIREBASE_IMG_DEBT_RESIZE = "_800x800"
     const val FIREBASE_IMG_RADIUS = 20
     const val FIREBASE_IMG_MARGIN = 0
 

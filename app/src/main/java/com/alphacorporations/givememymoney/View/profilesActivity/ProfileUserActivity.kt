@@ -17,7 +17,7 @@ import com.alphacorporations.givememymoney.Constant.CHANNEL_ID
 import com.alphacorporations.givememymoney.Constant.FIREBASE_COLLECTION_ID
 import com.alphacorporations.givememymoney.Constant.FIREBASE_IMG_MARGIN
 import com.alphacorporations.givememymoney.Constant.FIREBASE_IMG_RADIUS
-import com.alphacorporations.givememymoney.Constant.FIREBASE_IMG_RESIZE
+import com.alphacorporations.givememymoney.Constant.FIREBASE_IMG_USER_RESIZE
 import com.alphacorporations.givememymoney.Constant.NOTIFICATION_ID
 import com.alphacorporations.givememymoney.Constant.SELECT_PICTURE
 import com.alphacorporations.givememymoney.R
@@ -98,8 +98,8 @@ class ProfileUserActivity : AppCompatActivity() {
     }
 
     private fun saveImgOnFirebaseStorage() {
-        val riversRef: StorageReference = mStorageRef.child("images/$FIREBASE_COLLECTION_ID")
-        imageUri?.let { riversRef.putFile(it) }
+        val ref: StorageReference = mStorageRef.child("images/$FIREBASE_COLLECTION_ID")
+        imageUri?.let { ref.putFile(it) }
     }
 
     private fun logOut() {
@@ -120,7 +120,13 @@ class ProfileUserActivity : AppCompatActivity() {
     private fun setUserAvatar(user: User) {
         if (user.userAvatarPath.equals("null")) user_avatar.setImageResource(R.drawable.ic_add_a_photo)
         else {
-            mStorageRef.child("images/$FIREBASE_COLLECTION_ID$FIREBASE_IMG_RESIZE").downloadUrl.addOnSuccessListener { Glide.with(this).load(it).transform(RoundedCornersTransformation(FIREBASE_IMG_RADIUS, FIREBASE_IMG_MARGIN)).into(user_avatar) }
+            mStorageRef.child("images/$FIREBASE_COLLECTION_ID$FIREBASE_IMG_USER_RESIZE").downloadUrl.addOnSuccessListener {
+                Glide
+                        .with(this)
+                        .load(it)
+                        .transform(RoundedCornersTransformation(FIREBASE_IMG_RADIUS, FIREBASE_IMG_MARGIN))
+                        .into(user_avatar)
+            }
         }
     }
 
@@ -169,7 +175,7 @@ class ProfileUserActivity : AppCompatActivity() {
         }
     }
 
-    fun adsConfig() {
+    private fun adsConfig() {
         MobileAds.initialize(this) { }
 
         val adRequest: AdRequest = AdRequest.Builder().build()
