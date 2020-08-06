@@ -21,4 +21,6 @@ object Constant {
     const val NOTIFICATION_ID = 10
 
 
+    /** id of debt clicked to open on DebtProfil **/
+    lateinit var DEBT_ID:String
 }

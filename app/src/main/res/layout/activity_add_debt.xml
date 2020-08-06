@@ -76,7 +76,7 @@
             tools:text="Julien" />
 
         <EditText
-            android:id="@+id/object_debt"
+            android:id="@+id/reason_debt"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_gravity="start"

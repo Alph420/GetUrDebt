@@ -11,13 +11,16 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.alphacorporations.givememymoney.Constant
+import com.alphacorporations.givememymoney.Constant.DEBT_ID
 import com.alphacorporations.givememymoney.R
 import com.alphacorporations.givememymoney.View.LoadingActivity
+import com.alphacorporations.givememymoney.event.OpenDebtEvent
 import com.alphacorporations.givememymoney.model.Debt
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import org.greenrobot.eventbus.EventBus
 
 
 /**
@@ -43,11 +46,11 @@ class DebtViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
     }
 
     fun bind(debt: Debt, pos: Int, list: MutableList<Debt>) {
-        /**if debtImg doesn't exist draw the little white person**/
+        /** if debtImg doesn't exist draw the little white person **/
         if (debt.img.equals("null")) debtImg?.let {
             Glide.with(itemView.context).load(R.drawable.ic_person_white).into(it)
         }
-        /**else draw de debtImg**/
+        /** else draw de debtImg **/
         else {
             debtImg?.let { Glide.with(itemView).load(debt.img).transform(CircleCrop()).into(it) }
         }
@@ -58,6 +61,10 @@ class DebtViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
 
         /**Confirmation delete debt**/
         imgDelete!!.setOnClickListener { deleteDebt(debt, list, pos, it) }
+
+        itemView.setOnClickListener {
+            openDebt(debt.id!!,it)
+        }
     }
 
     private fun deleteDebt(debt: Debt, list: MutableList<Debt>, pos: Int, view: View) {
@@ -78,5 +85,10 @@ class DebtViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         ) { dialog: DialogInterface, _: Int -> dialog.cancel() }
         val alert11 = builder1.create()
         alert11.show()
+    }
+
+    private fun openDebt(id: String, it: View) {
+        DEBT_ID = id
+        EventBus.getDefault().post(OpenDebtEvent().OpenDebtEvent(it))
     }
 }

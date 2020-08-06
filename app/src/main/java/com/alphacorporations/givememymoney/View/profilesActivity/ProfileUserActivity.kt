@@ -65,8 +65,7 @@ class ProfileUserActivity : AppCompatActivity() {
     }
 
     private fun getUserData() {
-        val docRef = colletions.document("UserID")
-        docRef.get()
+        colletions.document("UserID").get()
                 .addOnSuccessListener { document ->
                     initProfile(User(
                             document.data?.get("userAvatarName").toString(),
@@ -94,7 +93,7 @@ class ProfileUserActivity : AppCompatActivity() {
                 .addOnSuccessListener { finish() }
                 .addOnFailureListener { e ->
                     Log.w(Context.ACTIVITY_SERVICE, "Error adding document", e)
-                    Toast.makeText(this, "Erreur dans l'enregistrement de la dette", Toast.LENGTH_LONG)
+                    Toast.makeText(this, "Erreur dans l'enregistrement de la dette", Toast.LENGTH_LONG).show()
                 }
     }
 

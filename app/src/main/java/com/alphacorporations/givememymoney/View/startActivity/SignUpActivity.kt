@@ -16,7 +16,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.activity_add_debt.*
 import kotlinx.android.synthetic.main.activity_login.email_edit_text
 import kotlinx.android.synthetic.main.activity_login.password_edit_text
 import kotlinx.android.synthetic.main.activity_sign_up.*
@@ -100,7 +99,7 @@ class SignUpActivity : AppCompatActivity() {
                 "pseudo" to pseudo_edit_text.text.toString(),
                 "email" to user.email.toString(),
                 "birthDate" to "",
-                "Country" to this.resources.configuration.locale.displayCountry.toString()
+                "Country" to this.resources.configuration.locale.country
         )
 
         db.collection(FIREBASE_COLLECTION_ID).document("UserID")
@@ -108,7 +107,7 @@ class SignUpActivity : AppCompatActivity() {
                 .addOnSuccessListener { finish() }
                 .addOnFailureListener { e ->
                     Log.w(Context.ACTIVITY_SERVICE, "Error adding document", e)
-                    Toast.makeText(this, "Erreur dans l'enregistrement de la dette", Toast.LENGTH_LONG)
+                    Toast.makeText(this, "Erreur dans l'enregistrement de la dette", Toast.LENGTH_LONG).show()
                 }
     }
 

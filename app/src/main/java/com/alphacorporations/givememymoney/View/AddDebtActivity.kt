@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.widget.DatePicker
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.alphacorporations.givememymoney.Constant.FIREBASE_COLLECTION_ID
@@ -108,7 +107,7 @@ class AddDebtActivity : AppCompatActivity() {
         val data = hashMapOf(
                 "img" to avatarUri,
                 "name" to first_name_debt!!.text.toString() + " " + last_name_debt!!.text,
-                "reason" to if (object_debt.toString() == "") null else object_debt!!.text.toString(),
+                "reason" to if (reason_debt.toString() == "") null else reason_debt!!.text.toString(),
                 "date" to date,
                 "amount" to if (amount_debt!!.text.toString() == "") 0 else amount_debt!!.text.toString().toLong(),
                 "isDebt" to true
