@@ -129,6 +129,7 @@ class AddDebtActivity : AppCompatActivity() {
                 }
 
     }
+
     private fun saveImgOnFirebaseStorage(id: String) {
         val ref: StorageReference = mStorageRef.child("debt_images/$id")
         imageUri?.let { ref.putFile(it) }
@@ -137,7 +138,6 @@ class AddDebtActivity : AppCompatActivity() {
 
     private fun adsConfig() {
         MobileAds.initialize(this) { }
-
         val adRequest: AdRequest = AdRequest.Builder().build()
         adView.loadAd(adRequest)
     }

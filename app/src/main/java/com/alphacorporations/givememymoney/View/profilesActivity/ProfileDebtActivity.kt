@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.alphacorporations.givememymoney.Constant
 import com.alphacorporations.givememymoney.Constant.DEBT_ID
 import com.alphacorporations.givememymoney.Constant.FIREBASE_COLLECTION_ID
+import com.alphacorporations.givememymoney.Constant.FIREBASE_IMG_DEBT_RESIZE
 import com.alphacorporations.givememymoney.Constant.SELECT_PICTURE
 import com.alphacorporations.givememymoney.R
 import com.alphacorporations.givememymoney.model.Debt
@@ -85,11 +86,12 @@ class ProfileDebtActivity : AppCompatActivity() {
     private fun setDebtImg(debt: Debt) {
         if (debt.img.equals("null")) user_avatar.setImageResource(R.drawable.ic_add_a_photo)
         else {
-            mStorageRef.child("images/$FIREBASE_COLLECTION_ID${Constant.FIREBASE_IMG_DEBT_RESIZE}").downloadUrl.addOnSuccessListener {
+            println("debt_images/$FIREBASE_COLLECTION_ID$FIREBASE_IMG_DEBT_RESIZE")
+            mStorageRef.child("debt_images/$DEBT_ID$FIREBASE_IMG_DEBT_RESIZE").downloadUrl.addOnSuccessListener {
                 Glide
                         .with(this)
                         .load(it)
-                        .transform(RoundedCornersTransformation(Constant.FIREBASE_IMG_RADIUS, Constant.FIREBASE_IMG_MARGIN))
+                        .override(800,400)
                         .into(avatar)
             }
         }
