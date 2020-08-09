@@ -10,6 +10,7 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -21,7 +22,9 @@ import com.alphacorporations.givememymoney.Constant.FIREBASE_IMG_USER_RESIZE
 import com.alphacorporations.givememymoney.Constant.NOTIFICATION_ID
 import com.alphacorporations.givememymoney.Constant.SELECT_PICTURE
 import com.alphacorporations.givememymoney.R
+import com.alphacorporations.givememymoney.Utils.CountryComparator
 import com.alphacorporations.givememymoney.View.startActivity.LoginActivity
+import com.alphacorporations.givememymoney.model.Country
 import com.alphacorporations.givememymoney.model.User
 import com.bumptech.glide.Glide
 import com.google.android.gms.ads.AdRequest
@@ -44,11 +47,11 @@ Projet: Give Me My Money
 class ProfileUserActivity : AppCompatActivity() {
 
     //GLOBAL VARIABLES
-    var mStorageRef: StorageReference = FirebaseStorage.getInstance().reference
+    private var mStorageRef: StorageReference = FirebaseStorage.getInstance().reference
     private val db = Firebase.firestore
     private var colletions: CollectionReference = db.collection(FIREBASE_COLLECTION_ID)
-    lateinit var userFirebaseID: String
-    var imageUri: Uri? = null
+    private lateinit var userFirebaseID: String
+    private var imageUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,6 +64,7 @@ class ProfileUserActivity : AppCompatActivity() {
         save_user_profil.setOnClickListener { saveUserChange() }
         log_out_user_profil.setOnClickListener { logOut() }
         user_avatar.setOnClickListener { setAvatar() }
+        user_country.setOnClickListener { changeCountry() }
 
     }
 
@@ -102,12 +106,6 @@ class ProfileUserActivity : AppCompatActivity() {
         imageUri?.let { ref.putFile(it) }
     }
 
-    private fun logOut() {
-        FirebaseAuth.getInstance().signOut()
-        startActivity(Intent(this, LoginActivity::class.java))
-        finish()
-    }
-
 
     private fun initProfile(user: User) {
         setUserAvatar(user)
@@ -117,16 +115,20 @@ class ProfileUserActivity : AppCompatActivity() {
         user_country.setText(user.country)
     }
 
+    //region AvatarUserPart
     private fun setUserAvatar(user: User) {
         if (user.userAvatarPath.equals("null")) user_avatar.setImageResource(R.drawable.ic_add_a_photo)
         else {
-            mStorageRef.child("images/$FIREBASE_COLLECTION_ID$FIREBASE_IMG_USER_RESIZE").downloadUrl.addOnSuccessListener {
-                Glide
-                        .with(this)
-                        .load(it)
-                        .transform(RoundedCornersTransformation(FIREBASE_IMG_RADIUS, FIREBASE_IMG_MARGIN))
-                        .into(user_avatar)
-            }
+            mStorageRef
+                    .child("images/$FIREBASE_COLLECTION_ID$FIREBASE_IMG_USER_RESIZE")
+                    .downloadUrl
+                    .addOnSuccessListener {
+                        Glide
+                                .with(this)
+                                .load(it)
+                                .transform(RoundedCornersTransformation(FIREBASE_IMG_RADIUS, FIREBASE_IMG_MARGIN))
+                                .into(user_avatar)
+                    }
         }
     }
 
@@ -137,7 +139,63 @@ class ProfileUserActivity : AppCompatActivity() {
         startActivityForResult(Intent.createChooser(intent, ""), SELECT_PICTURE)
     }
 
-    public fun changeEmail() {
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            if (data != null) {
+                imageUri = data.data!!
+                Glide.with(this).load(imageUri).transform(RoundedCornersTransformation(FIREBASE_IMG_RADIUS, FIREBASE_IMG_MARGIN)).into(user_avatar)
+            }
+        }
+    }
+    //endregion
+
+
+    //region Change User Data
+    fun changeCountry() {
+
+        // setup the alert builder
+        val alertDialogBuilder = AlertDialog.Builder(this)
+        alertDialogBuilder.setTitle("Choisi ton pays")
+
+
+        // A collection to store our country object
+
+        // A collection to store our country object
+        val countries = mutableListOf<Country>()
+
+        // Get ISO countries, create Country object and
+        // store in the collection.
+
+        // Get ISO countries, create Country object and
+        // store in the collection.
+        val isoCountries = Locale.getISOCountries()
+        for (country in isoCountries) {
+            val locale = Locale("en", country)
+            val iso = locale.isO3Country
+            val code = locale.country
+            val name = locale.displayCountry
+            if ("" != iso && "" != code && "" != name) {
+                countries.add(Country(iso, code, name))
+            }
+        }
+
+        // Sort the country by their name and then display the content
+        // of countries collection object.
+
+        // Sort the country by their name and then display the content
+        // of countries collection object.
+        Collections.sort(countries, CountryComparator())
+
+        for (country in countries) {
+           println(country)
+        }
+
+    }
+
+
+    fun changeEmail() {
         //TODO User can update there email adress
         // Créer le NotificationChannel, seulement pour API 26+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -165,19 +223,16 @@ class ProfileUserActivity : AppCompatActivity() {
         notificationManager.notify(NOTIFICATION_ID, notifBuilder.build())
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK) {
-            if (data != null) {
-                imageUri = data.data!!
-                Glide.with(this).load(imageUri).transform(RoundedCornersTransformation(FIREBASE_IMG_RADIUS, FIREBASE_IMG_MARGIN)).into(user_avatar)
-            }
-        }
+    //endregion
+
+    private fun logOut() {
+        FirebaseAuth.getInstance().signOut()
+        startActivity(Intent(this, LoginActivity::class.java))
+        finish()
     }
 
     private fun adsConfig() {
         MobileAds.initialize(this) { }
-
         val adRequest: AdRequest = AdRequest.Builder().build()
         adView.loadAd(adRequest)
     }
