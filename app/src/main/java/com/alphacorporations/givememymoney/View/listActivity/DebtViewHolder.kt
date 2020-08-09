@@ -20,6 +20,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import jp.wasabeef.glide.transformations.CropSquareTransformation
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 import org.greenrobot.eventbus.EventBus
 
 
@@ -52,7 +54,13 @@ class DebtViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         }
         /** else draw de debtImg **/
         else {
-            debtImg?.let { Glide.with(itemView).load(debt.img).transform(CircleCrop()).into(it) }
+            debtImg?.let {
+                Glide
+                        .with(itemView)
+                        .load(debt.img)
+                        .transform(CropSquareTransformation())
+                        .into(it)
+            }
         }
 
         lblDebtName?.text = debt.name
@@ -63,7 +71,7 @@ class DebtViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         imgDelete!!.setOnClickListener { deleteDebt(debt, list, pos, it) }
 
         itemView.setOnClickListener {
-            openDebt(debt.id!!,it)
+            openDebt(debt.id!!, it)
         }
     }
 
