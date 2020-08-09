@@ -6,9 +6,9 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.alphacorporations.givememymoney.Constant
 import com.alphacorporations.givememymoney.Constant.DEBT_ID
 import com.alphacorporations.givememymoney.Constant.FIREBASE_COLLECTION_ID
 import com.alphacorporations.givememymoney.Constant.FIREBASE_IMG_DEBT_RESIZE
@@ -21,13 +21,11 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 import kotlinx.android.synthetic.main.activity_profile_debt.*
 import kotlinx.android.synthetic.main.activity_profile_debt.amount_debt
 import kotlinx.android.synthetic.main.activity_profile_debt.avatar
 import kotlinx.android.synthetic.main.activity_profile_debt.reason_debt
 import kotlinx.android.synthetic.main.activity_profile_debt.save_debt
-import kotlinx.android.synthetic.main.activity_profile_user.*
 
 
 class ProfileDebtActivity : AppCompatActivity() {
@@ -37,6 +35,7 @@ class ProfileDebtActivity : AppCompatActivity() {
     var mStorageRef: StorageReference = FirebaseStorage.getInstance().reference
     private var db = Firebase.firestore
     private val TAG = "DocSnippets"
+    lateinit var debt: Debt
     var imageUri: Uri? = null
 
 
@@ -76,25 +75,28 @@ class ProfileDebtActivity : AppCompatActivity() {
 
     }
 
-    private fun initDebtProfile(debt: Debt) {
+    private fun initDebtProfile(debtFromFirebase: Debt) {
+        debt = debtFromFirebase
         setDebtImg(debt)
         name_debt.setText(debt.name)
-        amount_debt.setText(debt.amount.toString().plus('€'))
+        amount_debt.setText(debt.amount.toString())
         reason_debt.setText(debt.reason)
     }
 
     private fun setDebtImg(debt: Debt) {
-        if (debt.img.equals("null")) user_avatar.setImageResource(R.drawable.ic_add_a_photo)
+        if (debt.img.equals("null")) avatar.setImageResource(R.drawable.ic_add_a_photo)
         else {
-            println("debt_images/$FIREBASE_COLLECTION_ID$FIREBASE_IMG_DEBT_RESIZE")
+            println("debt_images/$DEBT_ID")
             mStorageRef.child("debt_images/$DEBT_ID$FIREBASE_IMG_DEBT_RESIZE").downloadUrl.addOnSuccessListener {
                 Glide
                         .with(this)
                         .load(it)
-                        .override(800,400)
                         .into(avatar)
+                imageUri = it
+
             }
         }
+
     }
 
 
@@ -108,17 +110,21 @@ class ProfileDebtActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
-            val imageUri = data!!.data
+            imageUri = data!!.data
             avatar!!.setImageURI(imageUri)
         }
     }
 
     private fun save() {
+        saveImgDebtOnFirebaseStorage()
         val data = hashMapOf(
-                "img" to avatar.toString(),
+                "img" to imageUri.toString(),
                 "name" to name_debt.text.toString(),
                 "amount" to amount_debt.text.toString(),
-                "reason" to reason_debt.text.toString()
+                "reason" to reason_debt.text.toString(),
+                "date" to debt.date,
+                "isDebt" to true
+
         )
 
         db.collection(FIREBASE_COLLECTION_ID).document(DEBT_ID)
@@ -129,5 +135,10 @@ class ProfileDebtActivity : AppCompatActivity() {
                     Toast.makeText(this, "Erreur dans l'enregistrement de la dette", Toast.LENGTH_LONG).show()
                 }
         finish()
+    }
+
+    private fun saveImgDebtOnFirebaseStorage() {
+        val ref: StorageReference = mStorageRef.child("debt_images/$DEBT_ID")
+        imageUri?.let { ref.putFile(it) }
     }
 }

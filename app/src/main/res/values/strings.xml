@@ -34,6 +34,9 @@
     <string name="email_user">Email</string>
     <string name="banner_ad_unit_id_first">ca-app-pub-1745806143462700/7118793808</string>
     <string name="banner_ad_unit_id_second">ca-app-pub-1745806143462700/3433101178</string>
+    <string name="debt_reason">Raison</string>
+    <string name="debt_avatar_description">debt_avatar</string>
+    <string name="debt_amount">0€</string>
 
 
 </resources>

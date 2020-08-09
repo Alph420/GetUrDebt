@@ -7,10 +7,11 @@
     tools:context=".View.profilesActivity.ProfileDebtActivity">
 
 
+
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
@@ -26,22 +27,24 @@
             android:id="@+id/avatar"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
             android:layout_gravity="top|center"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
             android:background="@drawable/rounded"
-            android:src="@drawable/ic_add_a_photo" />
+            android:contentDescription="@string/debt_avatar_description"/>
 
         <EditText
             android:id="@+id/name_debt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="150dp"
+            android:autofillHints=""
             android:background="@drawable/rounded_text"
             android:gravity="start"
             android:hint="@string/identite"
+            android:inputType="text"
             android:maxLines="1"
             android:singleLine="true"
             android:textSize="20sp"
@@ -54,38 +57,52 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_marginTop="150dp"
-            android:layout_marginEnd="24dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="24dp"
+            android:autofillHints=""
             android:background="@drawable/rounded_text"
             android:gravity="center_horizontal"
-            android:hint="0"
+            android:hint="@string/debt_amount"
             android:inputType="number" />
 
 
-        <EditText
-            android:id="@+id/reason_debt"
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginStart="24dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="200dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/rounded_text"
-            android:gravity="center_horizontal"
-            android:hint="Raison" />
+            android:layout_marginEnd="16dp"
 
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/rounded_text">
+
+            <EditText
+                android:id="@+id/reason_debt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:autofillHints=""
+                android:background="@android:color/transparent"
+                android:gravity="center_horizontal"
+                android:hint="@string/debt_reason"
+                android:inputType="text"
+                android:maxHeight="100dp" />
+
+        </ScrollView>
     </com.google.android.material.card.MaterialCardView>
+
 
     <Button
         android:id="@+id/save_debt"
         android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_gravity="bottom|center"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/border_btn"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/colorPrimary"
         android:text="@string/save"
+
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
