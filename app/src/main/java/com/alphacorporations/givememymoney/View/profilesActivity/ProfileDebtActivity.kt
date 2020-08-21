@@ -6,9 +6,9 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.alphacorporations.givememymoney.Constant
 import com.alphacorporations.givememymoney.Constant.DEBT_ID
 import com.alphacorporations.givememymoney.Constant.FIREBASE_COLLECTION_ID
 import com.alphacorporations.givememymoney.Constant.FIREBASE_IMG_DEBT_RESIZE
@@ -21,11 +21,12 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 import kotlinx.android.synthetic.main.activity_profile_debt.*
 import kotlinx.android.synthetic.main.activity_profile_debt.amount_debt
-import kotlinx.android.synthetic.main.activity_profile_debt.avatar
 import kotlinx.android.synthetic.main.activity_profile_debt.reason_debt
 import kotlinx.android.synthetic.main.activity_profile_debt.save_debt
+import kotlinx.android.synthetic.main.activity_profile_user.*
 
 
 class ProfileDebtActivity : AppCompatActivity() {
@@ -47,7 +48,7 @@ class ProfileDebtActivity : AppCompatActivity() {
 
         getDebtFromFirebase()
 
-        avatar!!.setOnClickListener { selectAvatar() }
+        debt_avatar_profile!!.setOnClickListener { selectAvatar() }
         save_debt!!.setOnClickListener { save() }
     }
 
@@ -77,25 +78,24 @@ class ProfileDebtActivity : AppCompatActivity() {
 
     private fun initDebtProfile(debtFromFirebase: Debt) {
         debt = debtFromFirebase
-        setDebtImg(debt)
+        setDebtImg()
         name_debt.setText(debt.name)
         amount_debt.setText(debt.amount.toString())
         reason_debt.setText(debt.reason)
     }
 
-    private fun setDebtImg(debt: Debt) {
-        if (debt.img.equals("null")) avatar.setImageResource(R.drawable.ic_add_a_photo)
-        else {
-            println("debt_images/$DEBT_ID")
-            mStorageRef.child("debt_images/$DEBT_ID$FIREBASE_IMG_DEBT_RESIZE").downloadUrl.addOnSuccessListener {
-                Glide
-                        .with(this)
-                        .load(it)
-                        .into(avatar)
-                imageUri = it
-
-            }
-        }
+    private fun setDebtImg() {
+        mStorageRef
+                .child("debt_images/$DEBT_ID$FIREBASE_IMG_DEBT_RESIZE")
+                .downloadUrl
+                .addOnSuccessListener {
+                    Glide
+                            .with(this)
+                            .load(it)
+                            .transform(RoundedCornersTransformation(Constant.FIREBASE_IMG_RADIUS, Constant.FIREBASE_IMG_MARGIN))
+                            .into(debt_avatar_profile)
+                }
+                .addOnFailureListener { user_avatar.setImageResource(R.drawable.ic_add_a_photo) }
 
     }
 
@@ -111,14 +111,17 @@ class ProfileDebtActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             imageUri = data!!.data
-            avatar!!.setImageURI(imageUri)
+            Glide
+                    .with(this)
+                    .load(imageUri)
+                    .transform(RoundedCornersTransformation(Constant.FIREBASE_IMG_RADIUS, Constant.FIREBASE_IMG_MARGIN))
+                    .into(debt_avatar_profile)
+            saveImgDebtOnFirebaseStorage()
         }
     }
 
     private fun save() {
-        saveImgDebtOnFirebaseStorage()
         val data = hashMapOf(
-                "img" to imageUri.toString(),
                 "name" to name_debt.text.toString(),
                 "amount" to amount_debt.text.toString(),
                 "reason" to reason_debt.text.toString(),

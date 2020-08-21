@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:ads="http://schemas.android.com/apk/res-auto"
     tools:context=".View.AddDebtActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -40,19 +40,21 @@
         android:layout_width="match_parent"
         android:layout_height="400dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:backgroundTint="@color/white"
-        app:strokeWidth="1dp"
-        app:strokeColor="@color/colorPrimary"
         app:cardCornerRadius="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/adView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+        app:layout_constraintVertical_bias="0.0"
+        app:strokeColor="@color/colorPrimary"
+        app:strokeWidth="1dp">
 
 
         <ImageView
-            android:id="@+id/avatar"
+            android:id="@+id/debt_avatar_adding"
             android:layout_width="250dp"
             android:layout_height="100dp"
             android:layout_gravity="center_horizontal"
@@ -67,13 +69,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="160dp"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="160dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/rounded_text"
             android:drawableStart="@drawable/ic_account_box"
             android:gravity="center"
-            android:hint="@string/identite"
+            android:hint="@string/name"
             android:inputType="text"
             android:maxLines="1"
             android:singleLine="true"
@@ -85,16 +87,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="240dp"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="240dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/rounded_text"
             android:drawableStart="@drawable/ic_text"
             android:gravity="center"
             android:hint="@string/debt_reason"
             android:inputType="textMultiLine"
-            android:maxLines="5"
             android:maxLength="250"
+            android:maxLines="5"
             android:textSize="12sp"
             tools:text="raison" />
 
@@ -104,18 +106,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="200dp"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="200dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/rounded_text"
             android:drawableStart="@drawable/ic_monetization"
             android:gravity="center"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:textSize="12sp"
+            android:hint="montant"
+            android:inputType="number"
+            android:maxLength="5"
             android:textColor="@color/dark"
-            android:hint="0 €"
-            android:inputType="number" />
+            android:textSize="12sp" />
 
     </com.google.android.material.card.MaterialCardView>
 
@@ -125,9 +126,10 @@
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
         ads:adSize="BANNER"
         ads:adUnitId="@string/banner_ad_unit_id_first"
-        app:layout_constraintBottom_toTopOf="@+id/save_debt">
+        app:layout_constraintBottom_toTopOf="@+id/error_msg">
 
     </com.google.android.gms.ads.AdView>
 
@@ -136,11 +138,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="8dp"
         android:gravity="center"
         android:textColor="@color/red"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/save_debt"
-        tools:text="@string/error"/>
+        tools:text="@string/error" />
 
     <Button
         android:id="@+id/save_debt"

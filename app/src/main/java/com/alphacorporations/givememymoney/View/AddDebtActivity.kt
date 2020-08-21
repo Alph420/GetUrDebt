@@ -12,18 +12,25 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.alphacorporations.givememymoney.Constant.DEBT_ID
+import com.alphacorporations.givememymoney.Constant
 import com.alphacorporations.givememymoney.Constant.FIREBASE_COLLECTION_ID
 import com.alphacorporations.givememymoney.Constant.SELECT_PICTURE
 import com.alphacorporations.givememymoney.R
 import com.alphacorporations.givememymoney.View.listActivity.ListDebtActivity
+import com.bumptech.glide.Glide
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 import kotlinx.android.synthetic.main.activity_add_debt.*
+import kotlinx.android.synthetic.main.activity_add_debt.adView
+import kotlinx.android.synthetic.main.activity_add_debt.amount_debt
+import kotlinx.android.synthetic.main.activity_add_debt.error_msg
+import kotlinx.android.synthetic.main.activity_add_debt.reason_debt
+import kotlinx.android.synthetic.main.activity_add_debt.save_debt
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -44,7 +51,7 @@ class AddDebtActivity : AppCompatActivity() {
         save_debt!!.isEnabled = false
 
 
-        avatar!!.setOnClickListener { selectAvatar() }
+        debt_avatar_adding!!.setOnClickListener { selectAvatar() }
         first_name_debt!!.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
                 if (s.isNotEmpty()) {
@@ -104,7 +111,11 @@ class AddDebtActivity : AppCompatActivity() {
         if (resultCode == Activity.RESULT_OK) {
             imageUri = data!!.data
             avatarUri = imageUri.toString()
-            avatar!!.setImageURI(imageUri)
+            Glide
+                    .with(this)
+                    .load(imageUri)
+                    .transform(RoundedCornersTransformation(Constant.FIREBASE_IMG_RADIUS, Constant.FIREBASE_IMG_MARGIN))
+                    .into(debt_avatar_adding)
         }
     }
 

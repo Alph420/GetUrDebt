@@ -12,6 +12,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.alphacorporations.givememymoney.Constant
 import com.alphacorporations.givememymoney.Constant.DEBT_ID
+import com.alphacorporations.givememymoney.Constant.FIREBASE_IMG_DEBT_RESIZE
 import com.alphacorporations.givememymoney.R
 import com.alphacorporations.givememymoney.View.LoadingActivity
 import com.alphacorporations.givememymoney.event.OpenDebtEvent
@@ -20,8 +21,11 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import jp.wasabeef.glide.transformations.CropSquareTransformation
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation
+import kotlinx.android.synthetic.main.activity_profile_user.*
 import org.greenrobot.eventbus.EventBus
 
 
@@ -33,6 +37,7 @@ class DebtViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         RecyclerView.ViewHolder(inflater.inflate(R.layout.item_money, parent, false)) {
 
     private val db = Firebase.firestore
+    private var mStorageRef: StorageReference = FirebaseStorage.getInstance().reference
     private var debtImg: ImageView? = null
     private var lblDebtName: TextView? = null
     private var lblDebtDate: TextView? = null
@@ -48,20 +53,20 @@ class DebtViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
     }
 
     fun bind(debt: Debt, pos: Int, list: MutableList<Debt>) {
-        /** if debtImg doesn't exist draw the little white person **/
-        if (debt.img.equals("false")) debtImg?.let {
-            Glide.with(itemView.context).load(R.drawable.ic_person_white).into(it)
-        }
-        /** else draw de debtImg **/
-        else {
-            debtImg?.let {
-                Glide
-                        .with(itemView)
-                        .load(debt.img)
-                        .transform(CropSquareTransformation())
-                        .into(it)
-            }
-        }
+
+        mStorageRef
+                .child("debt_images/${debt.id}${FIREBASE_IMG_DEBT_RESIZE}")
+                .downloadUrl
+                .addOnSuccessListener {
+                    debtImg?.let { it1 ->
+                        Glide
+                                .with(itemView)
+                                .load(it)
+                                .transform(CropSquareTransformation())
+                                .into(it1)
+                    }
+                }
+                .addOnFailureListener { debtImg?.let { it1 -> Glide.with(itemView.context).load(R.drawable.ic_person_white).into(it1) } }
 
         lblDebtName?.text = debt.name
         lblDebtDate?.text = debt.date

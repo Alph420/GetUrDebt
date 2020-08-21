@@ -28,15 +28,17 @@
     <string name="log_out">Déconnexion</string>
     <string name="email_error">Veuillez rentrer une email valide</string>
     <string name="password_error">Mot de passe non identiques</string>
-    <string name="country_user">Pays</string>
     <string name="birthday_user">date de naissance</string>
     <string name="email_user">Email</string>
-    <string name="banner_ad_unit_id_first">ca-app-pub-1745806143462700/7118793808</string>
-    <string name="banner_ad_unit_id_second">ca-app-pub-1745806143462700/3433101178</string>
     <string name="debt_reason">Raison</string>
-    <string name="debt_avatar_description">debt_avatar</string>
     <string name="debt_amount">0€</string>
     <string name="adding_debt_error">Une dette a besoin d\'un nom</string>
+
+
+    <!--ADS-->
+    <string name="banner_ad_unit_id_first">ca-app-pub-1745806143462700/7118793808</string>
+    <string name="banner_ad_unit_id_second">ca-app-pub-1745806143462700/3433101178</string>
+    <string name="name">Nom</string>
 
 
 </resources>

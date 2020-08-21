@@ -28,8 +28,6 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 import kotlinx.android.synthetic.main.activity_profile_user.*
-import java.util.*
-
 
 /**
 Created by Alph4 le 19/07/2020.
@@ -51,7 +49,6 @@ class ProfileUserActivity : AppCompatActivity() {
         userFirebaseID = FirebaseAuth.getInstance().currentUser!!.uid
 
         getUserData()
-
 
         user_avatar.setOnClickListener { setAvatar() }
         save_user_profil.setOnClickListener { saveUserChange() }

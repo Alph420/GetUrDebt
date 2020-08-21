@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".View.profilesActivity.ProfileDebtActivity">
@@ -11,7 +12,7 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="400dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
@@ -24,74 +25,99 @@
 
 
         <ImageView
-            android:id="@+id/avatar"
+            android:id="@+id/debt_avatar_profile"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_gravity="top|center"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
-            android:background="@drawable/rounded"
-            android:contentDescription="@string/debt_avatar_description"/>
+            android:background="@drawable/rounded" />
 
         <EditText
             android:id="@+id/name_debt"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="150dp"
-            android:autofillHints=""
+            android:layout_marginTop="160dp"
+            android:layout_marginEnd="16dp"
             android:background="@drawable/rounded_text"
-            android:gravity="start"
-            android:hint="@string/identite"
+            android:drawableStart="@drawable/ic_account_box"
+            android:gravity="center"
+            android:hint="@string/name"
             android:inputType="text"
             android:maxLines="1"
             android:singleLine="true"
-            android:textSize="20sp"
+            android:textSize="12sp"
             tools:text="Julien" />
 
 
         <EditText
             android:id="@+id/amount_debt"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginTop="150dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="24dp"
-            android:autofillHints=""
-            android:background="@drawable/rounded_text"
-            android:gravity="center_horizontal"
-            android:hint="@string/debt_amount"
-            android:inputType="number" />
 
-
-        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginStart="16dp"
             android:layout_marginTop="200dp"
             android:layout_marginEnd="16dp"
+            android:background="@drawable/rounded_text"
+            android:drawableStart="@drawable/ic_monetization"
+            android:gravity="center"
+            android:hint="montant"
+            android:inputType="number"
+            android:maxLength="5"
+            android:textColor="@color/dark"
+            android:textSize="12sp" />
 
-            android:layout_marginBottom="24dp"
-            android:background="@drawable/rounded_text">
 
             <EditText
                 android:id="@+id/reason_debt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:autofillHints=""
-                android:background="@android:color/transparent"
-                android:gravity="center_horizontal"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="240dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/rounded_text"
+                android:drawableStart="@drawable/ic_text"
+                android:gravity="center"
                 android:hint="@string/debt_reason"
-                android:inputType="text"
-                android:maxHeight="100dp" />
+                android:inputType="textMultiLine"
+                android:maxLength="250"
+                android:maxLines="5"
+                android:textSize="12sp"
+                tools:text="raison"/>
 
-        </ScrollView>
     </com.google.android.material.card.MaterialCardView>
 
+
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/banner_ad_unit_id_first"
+        app:layout_constraintBottom_toTopOf="@+id/error_msg">
+
+    </com.google.android.gms.ads.AdView>
+
+    <TextView
+        android:id="@+id/error_msg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="8dp"
+        android:gravity="center"
+        android:textColor="@color/red"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/save_debt"
+        tools:text="@string/error" />
 
     <Button
         android:id="@+id/save_debt"
