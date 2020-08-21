@@ -49,7 +49,7 @@ class DebtViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
 
     fun bind(debt: Debt, pos: Int, list: MutableList<Debt>) {
         /** if debtImg doesn't exist draw the little white person **/
-        if (debt.img.equals("null")) debtImg?.let {
+        if (debt.img.equals("false")) debtImg?.let {
             Glide.with(itemView.context).load(R.drawable.ic_person_white).into(it)
         }
         /** else draw de debtImg **/

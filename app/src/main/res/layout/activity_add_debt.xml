@@ -38,7 +38,7 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardView"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="400dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
@@ -64,45 +64,56 @@
 
         <EditText
             android:id="@+id/first_name_debt"
-            android:layout_width="150dp"
-            android:layout_height="50dp"
-            android:layout_gravity="start"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="150dp"
-            android:hint="prenom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="160dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/rounded_text"
+            android:drawableStart="@drawable/ic_account_box"
+            android:gravity="center"
+            android:hint="@string/identite"
+            android:inputType="text"
             android:maxLines="1"
             android:singleLine="true"
-            android:textSize="20sp"
+            android:textSize="12sp"
             tools:text="Julien" />
 
         <EditText
             android:id="@+id/reason_debt"
-            android:layout_width="150dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="200dp"
-            android:hint="Raison"
-            android:singleLine="true" />
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="240dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/rounded_text"
+            android:drawableStart="@drawable/ic_text"
+            android:gravity="center"
+            android:hint="@string/debt_reason"
+            android:inputType="textMultiLine"
+            android:maxLines="5"
+            android:maxLength="250"
+            android:textSize="12sp"
+            tools:text="raison" />
 
-        <EditText
-            android:id="@+id/last_name_debt"
-            android:layout_width="150dp"
-            android:layout_height="50dp"
-            android:layout_gravity="end"
-            android:layout_marginTop="150dp"
-            android:layout_marginEnd="8dp"
-            android:hint="Nom"
-            android:singleLine="true"
-            tools:text="Jennequin" />
 
         <EditText
             android:id="@+id/amount_debt"
-            android:layout_width="150dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="200dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/rounded_text"
+            android:drawableStart="@drawable/ic_monetization"
+            android:gravity="center"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textSize="12sp"
+            android:textColor="@color/dark"
             android:hint="0 €"
             android:inputType="number" />
 
@@ -111,15 +122,25 @@
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="8dp"
         ads:adSize="BANNER"
         ads:adUnitId="@string/banner_ad_unit_id_first"
         app:layout_constraintBottom_toTopOf="@+id/save_debt">
 
     </com.google.android.gms.ads.AdView>
+
+    <TextView
+        android:id="@+id/error_msg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:textColor="@color/red"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/save_debt"
+        tools:text="@string/error"/>
 
     <Button
         android:id="@+id/save_debt"

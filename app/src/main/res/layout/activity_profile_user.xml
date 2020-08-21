@@ -56,7 +56,6 @@
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:layout_gravity="top|center"
-
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
@@ -66,12 +65,14 @@
 
         <EditText
             android:id="@+id/user_name"
-            android:layout_width="150dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginStart="8dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="24dp"
             android:layout_marginTop="160dp"
+            android:layout_marginEnd="16dp"
             android:background="@drawable/rounded_text"
+            android:drawableStart="@drawable/ic_account_box"
             android:gravity="center"
             android:hint="@string/identite"
             android:inputType="text"
@@ -82,11 +83,12 @@
 
         <TextView
             android:id="@+id/user_email"
-            android:layout_width="150dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginStart="8dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="24dp"
             android:layout_marginTop="200dp"
+            android:layout_marginEnd="16dp"
             android:background="@drawable/rounded_text"
             android:gravity="center"
             android:hint="@string/email_user"
@@ -94,42 +96,8 @@
             android:singleLine="true"
             android:textColor="@color/dark"
             android:textSize="12sp"
-            tools:text="email" />
-
-        <EditText
-            android:id="@+id/birthday_user"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginTop="160dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/rounded_text"
-            android:gravity="center"
-            android:hint="@string/birthday_user"
-            android:inputType="date"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:textSize="12sp"
-            tools:text="19/11/1999" />
-
-        <TextView
-            android:id="@+id/user_country"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginTop="200dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/rounded_text"
-            android:gravity="center"
-            android:hint="@string/country_user"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:textSize="12sp"
-
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/user_avatar"
-            app:layout_constraintTop_toBottomOf="@+id/birthday_user"
-            tools:text="France" />
+            tools:text="email"
+            ads:drawableStartCompat="@drawable/ic_email" />
 
     </com.google.android.material.card.MaterialCardView>
 

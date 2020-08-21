@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.alphacorporations.givememymoney.Constant.DEBT_ID
@@ -40,16 +41,21 @@ class AddDebtActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_debt)
         adsConfig()
+        save_debt!!.isEnabled = false
+
 
         avatar!!.setOnClickListener { selectAvatar() }
         first_name_debt!!.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
                 if (s.isNotEmpty()) {
                     save_debt!!.isEnabled = true
+                    error_msg.visibility = View.GONE
                     save_debt!!.setTextColor(Color.WHITE)
                 }
                 if (s.isEmpty()) {
                     save_debt!!.isEnabled = false
+                    error_msg.text = getString(R.string.adding_debt_error)
+                    error_msg.visibility = View.VISIBLE
                     save_debt!!.setTextColor(Color.RED)
                 }
             }
@@ -57,10 +63,13 @@ class AddDebtActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 if (s.isNotEmpty()) {
                     save_debt!!.isEnabled = true
+                    error_msg.visibility = View.GONE
                     save_debt!!.setTextColor(Color.WHITE)
                 }
                 if (s.isEmpty()) {
                     save_debt!!.isEnabled = false
+                    error_msg.text = getString(R.string.adding_debt_error)
+                    error_msg.visibility = View.VISIBLE
                     save_debt!!.setTextColor(Color.RED)
                 }
             }
@@ -68,10 +77,13 @@ class AddDebtActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable) {
                 if (s.isNotEmpty()) {
                     save_debt!!.isEnabled = true
+                    error_msg.visibility = View.GONE
                     save_debt!!.setTextColor(Color.WHITE)
                 }
                 if (s.isEmpty()) {
                     save_debt!!.isEnabled = false
+                    error_msg.text = getString(R.string.adding_debt_error)
+                    error_msg.visibility = View.VISIBLE
                     save_debt!!.setTextColor(Color.RED)
                 }
             }
@@ -107,8 +119,8 @@ class AddDebtActivity : AppCompatActivity() {
         date()
 
         val data = hashMapOf(
-                "img" to avatarUri,
-                "name" to first_name_debt!!.text.toString() + " " + last_name_debt!!.text,
+                "img" to (avatarUri != null),
+                "name" to first_name_debt!!.text.toString(),
                 "reason" to if (reason_debt.toString() == "") null else reason_debt!!.text.toString(),
                 "date" to date,
                 "amount" to if (amount_debt!!.text.toString() == "") 0 else amount_debt!!.text.toString().toLong(),

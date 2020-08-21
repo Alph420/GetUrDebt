@@ -6,7 +6,6 @@
     <string name="identite">Pseudo</string>
     <string name="title_activity_splash">GiveMeMyMoney</string>
 
-
     <string name="title">Give me my money</string>
     <string name="please">Please</string>
     <string name="loginbtn">Se connecter</string>
@@ -37,6 +36,7 @@
     <string name="debt_reason">Raison</string>
     <string name="debt_avatar_description">debt_avatar</string>
     <string name="debt_amount">0€</string>
+    <string name="adding_debt_error">Une dette a besoin d\'un nom</string>
 
 
 </resources>

@@ -35,7 +35,7 @@ class ListDebtActivity : AppCompatActivity() {
         initList()
     }
 
-    fun configureBottomView() {
+    private fun configureBottomView() {
         activity_main_bottom_navigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.action_list -> {
@@ -52,7 +52,7 @@ class ListDebtActivity : AppCompatActivity() {
         }
     }
 
-    fun initList() {
+    private fun initList() {
         getDataFromFirebase()
     }
 
@@ -90,14 +90,13 @@ class ListDebtActivity : AppCompatActivity() {
         }
     }
 
-    fun setAndUseAdapter() {
+    private fun setAndUseAdapter() {
         val mLayoutManager = LinearLayoutManager(this)
         list_money.adapter = DebtAdapter(this, debtList)
         list_money.layoutManager = mLayoutManager
         list_money.adapter?.notifyDataSetChanged()
         updateTasks()
     }
-
 
     override fun onResume() {
         super.onResume()
