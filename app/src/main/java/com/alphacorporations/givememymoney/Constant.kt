@@ -25,4 +25,5 @@ object Constant {
 
     /** id of debt clicked to open on DebtProfil **/
     lateinit var DEBT_ID:String
+    var DEVISE:Char = '€'
 }

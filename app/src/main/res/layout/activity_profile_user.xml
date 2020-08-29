@@ -38,7 +38,7 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardView"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
@@ -92,12 +92,41 @@
             android:background="@drawable/rounded_text"
             android:gravity="center"
             android:hint="@string/email_user"
-            android:maxLines="1"
-            android:singleLine="true"
             android:textColor="@color/dark"
             android:textSize="12sp"
-            tools:text="email"
-            ads:drawableStartCompat="@drawable/ic_email" />
+            ads:drawableStartCompat="@drawable/ic_email"
+            tools:text="email" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="240dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="16dp"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/user_devise"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                tools:text="Devise" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="2" />
+
+            <Button
+                android:id="@+id/user_email_change"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                tools:text="email" />
+
+        </LinearLayout>
+
 
     </com.google.android.material.card.MaterialCardView>
 

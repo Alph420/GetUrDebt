@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.alphacorporations.givememymoney.Constant
 import com.alphacorporations.givememymoney.Constant.DEBT_ID
+import com.alphacorporations.givememymoney.Constant.DEVISE
 import com.alphacorporations.givememymoney.Constant.FIREBASE_COLLECTION_ID
 import com.alphacorporations.givememymoney.Constant.FIREBASE_IMG_DEBT_RESIZE
 import com.alphacorporations.givememymoney.Constant.SELECT_PICTURE
@@ -80,11 +81,12 @@ class ProfileDebtActivity : AppCompatActivity() {
         debt = debtFromFirebase
         setDebtImg()
         name_debt.setText(debt.name)
-        amount_debt.setText(debt.amount.toString())
+        amount_debt.setText(debt.amount.toString().plus(DEVISE))
         reason_debt.setText(debt.reason)
     }
 
     private fun setDebtImg() {
+        /** IF IMG FROM FIREBASE EXIST DRAW IT ELSE DRAW A LITTLE PHOTO **/
         mStorageRef
                 .child("debt_images/$DEBT_ID$FIREBASE_IMG_DEBT_RESIZE")
                 .downloadUrl
@@ -95,7 +97,7 @@ class ProfileDebtActivity : AppCompatActivity() {
                             .transform(RoundedCornersTransformation(Constant.FIREBASE_IMG_RADIUS, Constant.FIREBASE_IMG_MARGIN))
                             .into(debt_avatar_profile)
                 }
-                .addOnFailureListener { user_avatar.setImageResource(R.drawable.ic_add_a_photo) }
+                .addOnFailureListener { debt_avatar_profile.setImageResource(R.drawable.ic_add_a_photo) }
 
     }
 

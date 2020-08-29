@@ -12,6 +12,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.alphacorporations.givememymoney.Constant
 import com.alphacorporations.givememymoney.Constant.DEBT_ID
+import com.alphacorporations.givememymoney.Constant.DEVISE
 import com.alphacorporations.givememymoney.Constant.FIREBASE_IMG_DEBT_RESIZE
 import com.alphacorporations.givememymoney.R
 import com.alphacorporations.givememymoney.View.LoadingActivity
@@ -70,7 +71,7 @@ class DebtViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
 
         lblDebtName?.text = debt.name
         lblDebtDate?.text = debt.date
-        lblDebtAmount?.text = debt.amount.toString().plus("€")
+        lblDebtAmount?.text = debt.amount.toString().plus(DEVISE)
 
         /**Confirmation delete debt**/
         imgDelete!!.setOnClickListener { deleteDebt(debt, list, pos, it) }

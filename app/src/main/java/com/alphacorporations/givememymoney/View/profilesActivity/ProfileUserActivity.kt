@@ -51,11 +51,14 @@ class ProfileUserActivity : AppCompatActivity() {
         getUserData()
 
         user_avatar.setOnClickListener { setAvatar() }
+        user_email_change.setOnClickListener { changeEmail() }
         save_user_profil.setOnClickListener { saveUserChange() }
         log_out_user_profil.setOnClickListener { logOut() }
     }
 
     private fun getUserData() {
+        /** GET DATA USER ON FIREBASE**/
+
         colletions.document("UserID").get()
                 .addOnSuccessListener { document ->
                     initProfile(User(
@@ -69,7 +72,7 @@ class ProfileUserActivity : AppCompatActivity() {
     }
 
     private fun saveUserChange() {
-
+    /** SAVE DATA USER CHANGE ON FIREBASE**/
         val data = hashMapOf(
                 "pseudo" to user_name.text.toString(),
                 "email" to user_email.text.toString()
@@ -97,6 +100,7 @@ class ProfileUserActivity : AppCompatActivity() {
 
     //region SetDefaultUserField
     private fun setUserAvatar() {
+        /** IF USER IMG PROFILE EXIST ON FIREBASE DRAW IT ELSE DRAW A LITTLE PHOTO**/
         mStorageRef
                 .child("images/$FIREBASE_COLLECTION_ID$FIREBASE_IMG_USER_RESIZE")
                 .downloadUrl
@@ -134,7 +138,6 @@ class ProfileUserActivity : AppCompatActivity() {
     fun changeEmail() {
 
     }
-
     //endregion
 
     private fun logOut() {
