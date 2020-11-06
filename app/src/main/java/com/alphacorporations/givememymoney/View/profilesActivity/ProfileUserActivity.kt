@@ -1,13 +1,11 @@
 package com.alphacorporations.givememymoney.View.profilesActivity
 
 import android.app.Activity
-import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.alphacorporations.givememymoney.Constant.FIREBASE_COLLECTION_ID
 import com.alphacorporations.givememymoney.Constant.FIREBASE_IMG_MARGIN
@@ -29,6 +27,7 @@ import com.google.firebase.storage.StorageReference
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 import kotlinx.android.synthetic.main.activity_profile_user.*
 
+
 /**
 Created by Alph4 le 19/07/2020.
 Projet: Give Me My Money
@@ -46,12 +45,18 @@ class ProfileUserActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile_user)
         adsConfig()
-        userFirebaseID = FirebaseAuth.getInstance().currentUser!!.uid
+        if (FirebaseAuth.getInstance().currentUser != null) userFirebaseID = FirebaseAuth.getInstance().currentUser!!.uid
+        else {
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+        }
+
 
         getUserData()
 
+        /**SET ON CLICK LISTENER**/
         user_avatar.setOnClickListener { setAvatar() }
-        user_email_change.setOnClickListener { changeEmail() }
+        user_theme_change.setOnClickListener { changeThemeApp() }
         save_user_profil.setOnClickListener { saveUserChange() }
         log_out_user_profil.setOnClickListener { logOut() }
     }
@@ -72,7 +77,7 @@ class ProfileUserActivity : AppCompatActivity() {
     }
 
     private fun saveUserChange() {
-    /** SAVE DATA USER CHANGE ON FIREBASE**/
+        /** SAVE DATA USER CHANGE ON FIREBASE**/
         val data = hashMapOf(
                 "pseudo" to user_name.text.toString(),
                 "email" to user_email.text.toString()
@@ -83,7 +88,6 @@ class ProfileUserActivity : AppCompatActivity() {
                 .addOnSuccessListener { finish() }
                 .addOnFailureListener { e ->
                     Log.w(Context.ACTIVITY_SERVICE, "Error adding document", e)
-                    Toast.makeText(this, "Erreur dans l'enregistrement de la dette", Toast.LENGTH_LONG).show()
                 }
     }
 
@@ -135,9 +139,9 @@ class ProfileUserActivity : AppCompatActivity() {
     //endregion
 
     //region Change User Data
-    fun changeEmail() {
-
+    private fun changeThemeApp() {
     }
+
     //endregion
 
     private fun logOut() {
@@ -151,6 +155,7 @@ class ProfileUserActivity : AppCompatActivity() {
         val adRequest: AdRequest = AdRequest.Builder().build()
         adView.loadAd(adRequest)
     }
+
 
     override fun onResume() {
         super.onResume()

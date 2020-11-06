@@ -35,18 +35,26 @@ class SignUpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
 
+        btn_sign_up.isEnabled = false
+
         password_edit_text.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (s?.length!! <= 5) password_edit_text.error = "Minimum 6 caracteres"
+                if (s?.length!! <= 5) {
+                    password_edit_text.error = "Minimum 6 caracteres"
+                    btn_sign_up.isEnabled = false
+                } else {
+                    btn_sign_up.isEnabled = true
+
+                }
             }
         })
 
 
-        //Click sur le btn sign up
+        //Click on btn sign up
         btn_sign_up.setOnClickListener {
             error_msg.visibility = View.INVISIBLE
             signUpVerification()
@@ -60,7 +68,7 @@ class SignUpActivity : AppCompatActivity() {
         val passwordConfirmation = password_edit_text_assurance.text.toString()
 
 
-        if (password == passwordConfirmation) signUp(email, password)
+        if (password == passwordConfirmation && !email.isNullOrEmpty()) signUp(email, password)
         else {
             if (email.isEmpty() || !email.contains('@')) {
                 error_msg.text = getString(R.string.email_error)
@@ -75,8 +83,7 @@ class SignUpActivity : AppCompatActivity() {
 
 
     private fun signUp(email: String, password: String) {
-
-
+        btn_sign_up.isEnabled = true
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {

@@ -28,7 +28,7 @@
                 android:fontFamily="@font/bangers"
                 android:gravity="center"
                 android:text="@string/app_name"
-                android:textColorHint="@color/white"
+                android:textColor="@color/white"
                 android:textSize="30sp"
                 android:textStyle="normal" />
 
@@ -153,7 +153,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
-        android:backgroundTint="@color/colorPrimary"
+        android:backgroundTint="@color/app_color"
         android:text="@string/save"
 
         android:textColor="@color/white"

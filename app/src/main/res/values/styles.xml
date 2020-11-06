@@ -6,6 +6,11 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+    </style>
+
+    <style name="AppTheme.Red">
+        <item name="colorPrimary">#FF0000</item>
     </style>
 
     <style name="date_picker_theme" parent="@android:style/Widget.DatePicker" />
@@ -15,9 +20,18 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="AppTheme.Red.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="AppThemeRed.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppThemeRed.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
 </resources>

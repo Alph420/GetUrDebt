@@ -11,11 +11,13 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="24dp"
+
         android:fontFamily="@font/bangers"
         android:gravity="center_horizontal"
         android:text="@string/title"
         android:textColor="@color/white"
         android:textSize="30sp"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,11 +30,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:background="@color/white"
 
+        android:background="@color/white"
         android:hint="@string/pseudo"
         app:boxBackgroundMode="filled"
         app:endIconMode="clear_text"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -50,7 +53,6 @@
         </com.google.android.material.textfield.TextInputEditText>
     </com.google.android.material.textfield.TextInputLayout>
 
-
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout_email"
         android:layout_width="match_parent"
@@ -58,6 +60,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="16dp"
+
         android:background="@color/white"
         android:hint="@string/email"
         app:boxBackgroundMode="filled"
@@ -74,7 +77,6 @@
             android:inputType="textEmailAddress"
             android:maxLines="1">
 
-
         </com.google.android.material.textfield.TextInputEditText>
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -85,6 +87,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
+
         android:background="@color/white"
         android:hint="@string/password"
         app:boxBackgroundMode="filled"
@@ -97,6 +100,7 @@
             android:id="@+id/password_edit_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+
             android:inputType="textPassword"
             android:maxLines="1">
 
@@ -113,9 +117,10 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:background="@color/white"
-        android:hint="@string/password_confirmation"
 
+        android:hint="@string/password_confirmation"
         app:boxBackgroundMode="filled"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout_password">
@@ -140,12 +145,13 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="24dp"
+
         android:gravity="center"
         android:text="@string/error"
         android:textColor="@color/red"
 
-
         android:visibility="invisible"
+
         app:layout_constraintBottom_toTopOf="@+id/btn_sign_up"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -157,13 +163,15 @@
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
+
         android:background="@drawable/border_btn"
-        android:backgroundTint="@color/colorPrimary"
+        android:backgroundTint="@color/app_color"
         android:fontFamily="@font/antic"
         android:text="@string/signup"
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="normal|bold"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

@@ -39,6 +39,8 @@
     <string name="banner_ad_unit_id_first">ca-app-pub-1745806143462700/7118793808</string>
     <string name="banner_ad_unit_id_second">ca-app-pub-1745806143462700/3433101178</string>
     <string name="name">Nom</string>
+    <string name="devise">Devise</string>
+    <string name="theme_color">Theme</string>
 
 
 </resources>

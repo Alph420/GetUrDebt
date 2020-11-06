@@ -16,6 +16,7 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <!-- Sample AdMob App ID: ca-app-pub-1745806143462700~4138031960 -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
