@@ -24,10 +24,6 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 import kotlinx.android.synthetic.main.activity_profile_debt.*
-import kotlinx.android.synthetic.main.activity_profile_debt.amount_debt
-import kotlinx.android.synthetic.main.activity_profile_debt.reason_debt
-import kotlinx.android.synthetic.main.activity_profile_debt.save_debt
-import kotlinx.android.synthetic.main.activity_profile_user.*
 
 
 class ProfileDebtActivity : AppCompatActivity() {
@@ -77,6 +73,10 @@ class ProfileDebtActivity : AppCompatActivity() {
 
     }
 
+    /**
+     *
+     * @param debtFromFirebase Debt
+     */
     private fun initDebtProfile(debtFromFirebase: Debt) {
         debt = debtFromFirebase
         setDebtImg()
@@ -84,6 +84,7 @@ class ProfileDebtActivity : AppCompatActivity() {
         amount_debt.setText(debt.amount.toString().plus(DEVISE))
         reason_debt.setText(debt.reason)
     }
+
 
     private fun setDebtImg() {
         /** IF IMG FROM FIREBASE EXIST DRAW IT ELSE DRAW A LITTLE PHOTO **/
@@ -109,6 +110,12 @@ class ProfileDebtActivity : AppCompatActivity() {
         startActivityForResult(Intent.createChooser(intent, ""), SELECT_PICTURE)
     }
 
+    /**
+     *
+     * @param requestCode Int
+     * @param resultCode Int
+     * @param data Intent?
+     */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {

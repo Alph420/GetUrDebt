@@ -96,6 +96,10 @@ class ProfileUserActivity : AppCompatActivity() {
         imageUri?.let { ref.putFile(it) }
     }
 
+    /**
+     * init user profile with user data from firebase
+     * @param user User
+     */
     private fun initProfile(user: User) {
         setUserAvatar()
         user_name.setText(user.pseudo)
